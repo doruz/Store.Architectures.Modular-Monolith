@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Store.Core.Domain.Repositories;
-using Store.Infrastructure.Persistence.InMemory;
 
 namespace Store.Infrastructure.Persistence;
 
@@ -26,7 +25,4 @@ public static class PersistenceLayer
 
         return services.AddSingleton<RepositoriesContext>();
     }
-
-    internal static bool UseCosmos(this IConfiguration configuration)
-        => configuration["AllowedPersistence"].IsEqualTo("cosmos");
 }

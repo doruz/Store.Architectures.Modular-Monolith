@@ -4,6 +4,7 @@ using System.Reflection;
 
 using Store.Shared;
 using Store.ShoppingCarts.Domain;
+using Store.ShoppingCarts.Domain.Repositories;
 using Store.ShoppingCarts.Infrastructure.Cosmos;
 
 namespace Store.ShoppingCarts.Infrastructure;
@@ -20,6 +21,16 @@ public static class ShoppingCartsInfrastructureLayer
             .AddSingleton<CosmosShoppingCartsDatabase>()
             .AddSingleton<IAppInitializer, CosmosShoppingCartsDatabase>()
 
-            .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>();
+            .AddRepository(configuration);
     }
+
+    private static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
+    {
+        return configuration.UseCosmos()
+            ? services.AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>()
+            : services.AddSingleton<IShoppingCartsRepository, InMemoryShoppingCartsRepository>();
+    }
+
+    private static bool UseCosmos(this IConfiguration configuration)
+        => configuration["ShoppingCarts:Persistence"].IsEqualTo("cosmos");
 }

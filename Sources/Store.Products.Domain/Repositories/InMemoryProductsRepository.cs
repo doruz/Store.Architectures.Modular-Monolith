@@ -1,21 +1,25 @@
 ﻿using EnsureThat;
-using Store.Products.Domain;
+using Store.Shared;
 
-namespace Store.Infrastructure.Persistence.InMemory;
+namespace Store.Products.Domain;
 
-internal sealed class InMemoryProductsRepository(InMemoryDatabase database) : IProductsRepository
+public sealed class InMemoryProductsRepository : IProductsRepository
 {
+    private readonly List<Product> _products = [];
+
     public Task<IEnumerable<Product>> GetAsync(Func<Product, bool> filter)
-        => Task.FromResult(database.Products.Where(filter));
+        => Task.FromResult(_products.Where(filter));
 
     public Task<Product?> FindAsync(string id)
-        => Task.FromResult(database.Products.Find(p => p.Id.IsEqualTo(id)));
+        => Task.FromResult(_products.Find(p => p.Id.IsEqualTo(id)));
 
     public Task AddAsync(Product product)
     {
         EnsureArg.IsNotNull(product, nameof(product));
 
-        database.Products.Add(product);
+        throw new Exception("");
+
+        _products.Add(product);
 
         return Task.CompletedTask;
     }
@@ -29,5 +33,5 @@ internal sealed class InMemoryProductsRepository(InMemoryDatabase database) : IP
     }
 
     private Task DeleteAsync(string id)
-        => Task.FromResult(database.Products.RemoveAll(p => p.Id.IsEqualTo(id)));
+        => Task.FromResult(_products.RemoveAll(p => p.Id.IsEqualTo(id)));
 }

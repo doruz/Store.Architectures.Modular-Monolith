@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-
-using Store.Shared;
 using Store.Orders.Domain;
 using Store.Orders.Infrastructure.Cosmos;
+using Store.Shared;
+using System.Reflection;
+using Store.Orders.Domain.Repositories;
 
 namespace Store.Orders.Infrastructure;
 
@@ -20,6 +20,16 @@ public static class OrdersInfrastructureLayer
             .AddSingleton<CosmosOrdersDatabase>()
             .AddSingleton<IAppInitializer, CosmosOrdersDatabase>()
 
-            .AddSingleton<IOrdersRepository, CosmosOrdersRepository>();
+            .AddRepository(configuration);
     }
+
+    private static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
+    {
+        return configuration.UseCosmos()
+            ? services.AddSingleton<IOrdersRepository, CosmosOrdersRepository>()
+            : services.AddSingleton<IOrdersRepository, InMemoryOrdersRepository>();
+    }
+
+    private static bool UseCosmos(this IConfiguration configuration)
+        => configuration["Orders:Persistence"].IsEqualTo("cosmos");
 }

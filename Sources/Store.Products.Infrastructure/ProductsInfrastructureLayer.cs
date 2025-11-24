@@ -19,6 +19,16 @@ public static class ProductsInfrastructureLayer
         .AddSingleton<CosmosProductsDatabase>()
         .AddSingleton<IAppInitializer, CosmosProductsDatabase>()
 
-        .AddSingleton<IProductsRepository, CosmosProductsRepository>();
+        .AddRepository(configuration);
     }
+
+    private static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
+    {
+        return configuration.UseCosmos() 
+            ? services.AddSingleton<IProductsRepository, CosmosProductsRepository>() 
+            : services.AddSingleton<IProductsRepository, InMemoryProductsRepository>();
+    }
+
+    private static bool UseCosmos(this IConfiguration configuration)
+        => configuration["Products:Persistence"].IsEqualTo("cosmos");
 }

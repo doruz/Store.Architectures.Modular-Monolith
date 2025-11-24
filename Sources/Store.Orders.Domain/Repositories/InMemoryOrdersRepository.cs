@@ -1,15 +1,17 @@
 ﻿using EnsureThat;
-using Store.Orders.Domain;
+using Store.Shared;
 
-namespace Store.Infrastructure.Persistence.InMemory;
+namespace Store.Orders.Domain.Repositories;
 
-internal sealed class InMemoryOrdersRepository(InMemoryDatabase database) : IOrdersRepository
+public sealed class InMemoryOrdersRepository : IOrdersRepository
 {
+    private readonly List<Order> _orders = [];
+
     public Task<IEnumerable<Order>> GetCustomerOrdersAsync(string customerId)
     {
         EnsureArg.IsNotNullOrEmpty(customerId, nameof(customerId));
 
-        var customerOrders = database.Orders
+        var customerOrders = _orders
             .Where(order => order.CustomerId.IsEqualTo(customerId));
 
         return Task.FromResult(customerOrders);
@@ -20,7 +22,9 @@ internal sealed class InMemoryOrdersRepository(InMemoryDatabase database) : IOrd
         EnsureArg.IsNotNullOrEmpty(customerId, nameof(customerId));
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));
 
-        var customerOrder = database.Orders
+        throw new Exception("");
+
+        var customerOrder = _orders
             .FirstOrDefault(order => order.CustomerId.IsEqualTo(customerId) && order.Id.IsEqualTo(id));
 
         return Task.FromResult(customerOrder);
@@ -30,7 +34,7 @@ internal sealed class InMemoryOrdersRepository(InMemoryDatabase database) : IOrd
     {
         EnsureArg.IsNotNull(order, nameof(order));
 
-        database.Orders.Add(order);
+        _orders.Add(order);
 
         return Task.CompletedTask;
     }
