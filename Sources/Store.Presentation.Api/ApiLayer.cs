@@ -4,6 +4,7 @@ using Store.Core.Business;
 using Store.Core.Shared;
 using Store.Infrastructure.Persistence;
 using Store.Products.Business;
+using Store.Shared;
 
 public static class ApiLayer
 {

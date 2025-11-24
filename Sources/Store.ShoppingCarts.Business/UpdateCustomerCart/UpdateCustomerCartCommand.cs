@@ -1,7 +1,6 @@
-﻿using Store.Core.Shared;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Store.Core.Business.ShoppingCarts;
+namespace Store.ShoppingCarts.Business;
 
 public sealed record UpdateCustomerCartCommand(IEnumerable<UpdateCustomerCartLineModel> Lines)
     : IRequest;

@@ -1,4 +1,4 @@
-﻿using Store.Core.Shared;
+﻿using Store.Shared;
 
 namespace Store.Presentation.Api.IntegrationTests;
 

@@ -1,6 +1,5 @@
-﻿using Store.Core.Business.Shared;
-using Store.Core.Business.ShoppingCarts;
-using Store.Core.Shared;
+﻿using Store.Shared;
+using Store.ShoppingCarts.Business;
 
 [ApiRoute("customers/current/shopping-carts/current")]
 public sealed class CustomersShoppingCartsController(IMediator mediator) : BaseApiController(mediator)

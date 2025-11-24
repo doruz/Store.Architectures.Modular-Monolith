@@ -3,9 +3,9 @@ using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 
-namespace Store.Core.Business.ShoppingCarts;
+namespace Store.ShoppingCarts.Business;
 
-internal sealed class CheckoutCustomerCartCommandHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class CheckoutCustomerCartCommandHandler(IShoppingCartsRepository shoppingCarts, RepositoriesContext repositories, ICurrentCustomer currentCustomer)
     : IRequestHandler<CheckoutCustomerCartCommand, IdModel>
 {
     public async Task<IdModel> Handle(CheckoutCustomerCartCommand request, CancellationToken _)
@@ -20,16 +20,16 @@ internal sealed class CheckoutCustomerCartCommandHandler(RepositoriesContext rep
 
         var customerOrder = new Order(currentCustomer.Id, orderLines);
         await repositories.Orders.SaveOrderAsync(customerOrder);
-        await repositories.ShoppingCarts.DeleteAsync(currentCustomer.Id);
+        await shoppingCarts.DeleteAsync(currentCustomer.Id);
 
         await UpdateProductsStock(shoppingCartItems);
 
         return new IdModel(customerOrder.Id);
     }
 
-    private async Task<List<(ShoppingCartLine CartLine, Domain.Product Product)>> GetShoppingCartItems()
+    private async Task<List<(ShoppingCartLine CartLine, Product Product)>> GetShoppingCartItems()
     {
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
+        var shoppingCart = await shoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         shoppingCart.EnsureIsNotEmpty();
 
@@ -43,7 +43,7 @@ internal sealed class CheckoutCustomerCartCommandHandler(RepositoriesContext rep
             .ToListAsync();
     }
 
-    private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, Domain.Product Product)> items)
+    private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, Product Product)> items)
     {
         foreach (var item in items)
         {

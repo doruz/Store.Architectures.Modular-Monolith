@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Business.ShoppingCarts;
+﻿namespace Store.ShoppingCarts.Business;
 
 public sealed record GetCustomerCartQueryResult
 {

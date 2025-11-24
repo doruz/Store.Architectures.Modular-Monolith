@@ -2,11 +2,9 @@
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
-using Store.Shared;
+namespace Store.ShoppingCarts.Business;
 
-namespace Store.Core.Business.ShoppingCarts;
-
-internal sealed class UpdateCustomerCartCommandHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class UpdateCustomerCartCommandHandler(IShoppingCartsRepository shoppingCarts, RepositoriesContext repositories, ICurrentCustomer currentCustomer)
     : IRequestHandler<UpdateCustomerCartCommand>
 {
     public async Task Handle(UpdateCustomerCartCommand request, CancellationToken _)
@@ -16,7 +14,7 @@ internal sealed class UpdateCustomerCartCommandHandler(RepositoriesContext repos
             return;
         }
 
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
+        var shoppingCart = await shoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         shoppingCart.UpdateOrRemoveLines(await GetValidLines(request.Lines));
 

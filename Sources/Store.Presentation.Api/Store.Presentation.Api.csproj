@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Store.Core.Business\Store.Core.Business.csproj" />
     <ProjectReference Include="..\Store.Infrastructure.Persistence\Store.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\Store.Products.Business\Store.Products.Business.csproj" />
+    <ProjectReference Include="..\Store.ShoppingCarts.Business\Store.ShoppingCarts.Business.csproj" />
   </ItemGroup>
 
   <ItemGroup>

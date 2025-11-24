@@ -3,16 +3,15 @@ using Store.Core.Domain;
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
-using Store.Shared;
 
-namespace Store.Core.Business.ShoppingCarts;
+namespace Store.ShoppingCarts.Business;
 
-internal sealed class GetCustomerCartQueryHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shoppingCarts, RepositoriesContext repositories, ICurrentCustomer currentCustomer)
     : IRequestHandler<GetCustomerCartQuery, GetCustomerCartQueryResult>
 {
     public async Task<GetCustomerCartQueryResult> Handle(GetCustomerCartQuery request, CancellationToken _)
     {
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
+        var shoppingCart = await shoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         var cartLines = await shoppingCart.Lines
             .Select(async cartLine => new
