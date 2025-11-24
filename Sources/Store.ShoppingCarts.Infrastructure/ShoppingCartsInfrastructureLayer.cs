@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Store.Shared;
 using System.Reflection;
+
+using Store.Shared;
 using Store.ShoppingCarts.Domain;
 using Store.ShoppingCarts.Infrastructure.Cosmos;
 

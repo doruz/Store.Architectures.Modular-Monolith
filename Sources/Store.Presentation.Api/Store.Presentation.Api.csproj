@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Store.Orders.Business\Store.Orders.Business.csproj" />
     <ProjectReference Include="..\Store.Orders.Infrastructure\Store.Orders.Infrastructure.csproj" />
     <ProjectReference Include="..\Store.Products.Business\Store.Products.Business.csproj" />
+    <ProjectReference Include="..\Store.Products.Infrastructure\Store.Products.Infrastructure.csproj" />
     <ProjectReference Include="..\Store.ShoppingCarts.Business\Store.ShoppingCarts.Business.csproj" />
     <ProjectReference Include="..\Store.ShoppingCarts.Infrastructure\Store.ShoppingCarts.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,13 +1,14 @@
 ﻿using EnsureThat;
 using Store.Products.Domain;
+using Store.Shared.Infrastructure.Cosmos;
 
-namespace Store.Infrastructure.Persistence.Cosmos;
+namespace Store.Products.Infrastructure.Cosmos;
 
-internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containers) : IProductsRepository
+internal sealed class CosmosProductsRepository(CosmosProductsDatabase db) : IProductsRepository
 {
     public Task<IEnumerable<Product>> GetAsync(Func<Product, bool> filter)
     {
-        var products = containers.Products
+        var products = db.Products
             .GetItemLinqQueryable<Product>(true)
             .Where(filter)
             .AsEnumerable();
@@ -16,13 +17,13 @@ internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containe
     }
 
     public Task<Product?> FindAsync(string id)
-        => containers.Products.FindAsync<Product>(id, id.ToPartitionKey());
+        => db.Products.FindAsync<Product>(id, id.ToPartitionKey());
 
     public async Task AddAsync(Product product)
     {
         EnsureArg.IsNotNull(product, nameof(product));
 
-        await containers.Products.CreateItemAsync(product, product.Id.ToPartitionKey());
+        await db.Products.CreateItemAsync(product, product.Id.ToPartitionKey());
     }
 
 
@@ -30,6 +31,6 @@ internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containe
     {
         EnsureArg.IsNotNull(product, nameof(product));
 
-        await containers.Products.ReplaceItemAsync(product, product.Id, product.Id.ToPartitionKey());
+        await db.Products.ReplaceItemAsync(product, product.Id, product.Id.ToPartitionKey());
     }
 }

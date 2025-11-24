@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-using Store.Orders.Domain;
 using Store.Shared;
+using Store.Orders.Domain;
 using Store.Orders.Infrastructure.Cosmos;
 
 namespace Store.Orders.Infrastructure;

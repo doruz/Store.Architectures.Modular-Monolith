@@ -5,6 +5,7 @@ using Store.Infrastructure.Persistence;
 using Store.Orders.Business;
 using Store.Orders.Infrastructure;
 using Store.Products.Business;
+using Store.Products.Infrastructure;
 using Store.Shared;
 using Store.ShoppingCarts.Business;
 using Store.ShoppingCarts.Infrastructure;
@@ -22,6 +23,7 @@ public static class ApiLayer
 
             .AddOrdersInfrastructure(configuration)
             .AddShoppingCartsInfrastructure(configuration)
+            .AddProductsInfrastructure(configuration)
 
             .AddTransient<ICurrentCustomer, CurrentCustomer>()
             .AddHostedService<AppInitializationService>();

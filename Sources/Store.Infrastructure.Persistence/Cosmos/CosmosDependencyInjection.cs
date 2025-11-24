@@ -13,7 +13,5 @@ internal static class CosmosDependencyInjection
 
             .AddSingleton(CosmosClientFactory.Create(configuration))
             .AddSingleton<CosmosDatabaseContainers>()
-            .AddSingleton<IAppInitializer, CosmosDatabaseInitializer>()
-
-            .AddSingleton<IProductsRepository, CosmosProductsRepository>();
+            .AddSingleton<IAppInitializer, CosmosDatabaseInitializer>();
 }

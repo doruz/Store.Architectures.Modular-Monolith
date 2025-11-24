@@ -7,12 +7,12 @@ namespace Store.Orders.Infrastructure.Cosmos;
 internal sealed class CosmosOrdersDatabase(CosmosClient cosmosClient, IOptions<CosmosOrdersOptions> options)
     : CosmosDatabase(cosmosClient, options)
 {
-    private const string CustomerOrders = "CustomerOrders";
+    private const string OrdersContainer = "Orders";
 
     protected override IReadOnlyList<ContainerProperties> Containers { get; } =
     [
-        new ContainerProperties(CustomerOrders, "/customerId")
+        new ContainerProperties(OrdersContainer, "/customerId")
     ];
 
-    public Container Orders => GetContainer(CustomerOrders);
+    public Container Orders => GetContainer(OrdersContainer);
 }
