@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Shared;
+﻿namespace Store.Shared;
 
 public static class EnumerableExtensions
 {

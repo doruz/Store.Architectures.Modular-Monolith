@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using EnsureThat;
 using Microsoft.Azure.Cosmos;
-using Store.Core.Domain.Entities;
+using Store.Shared;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal static class CosmosContainerExtensions
 {
     public static async Task<T?> FindAsync<T>(this Container container, string id, PartitionKey partitionKey)
-        where T : BaseEntity
+        where T : Entity
     {
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));
         EnsureArg.IsNotDefault(partitionKey, nameof(partitionKey));
@@ -24,7 +24,7 @@ internal static class CosmosContainerExtensions
     }
 
     public static async Task<bool> DeleteAsync<T>(this Container container, string id, PartitionKey partitionKey)
-        where T : BaseEntity
+        where T : Entity
     {
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));
 

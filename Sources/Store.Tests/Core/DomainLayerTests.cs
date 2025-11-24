@@ -1,4 +1,4 @@
-﻿using Store.Core.Domain.Entities;
+﻿using Store.Shared;
 
 namespace Store.Tests.Core;
 
@@ -9,7 +9,7 @@ public class DomainLayerTests
     {
         var result = SolutionTypes.Core.Domain
             .That()
-            .Inherit(typeof(BaseEntity)).Or().AreRecords()
+            .Inherit(typeof(Entity)).Or().AreRecords()
             .Should()
             .ResideInFixedNamespace($"{SolutionNamespaces.Core.Domain}.Entities").And().BePublic()
             .GetResult();
@@ -22,7 +22,7 @@ public class DomainLayerTests
     {
         var result = SolutionTypes.Core.Domain
             .That()
-            .ResideInNamespace($"{SolutionNamespaces.Core.Domain}.Entities").And().DoNotHaveName(nameof(BaseEntity))
+            .ResideInNamespace($"{SolutionNamespaces.Core.Domain}.Entities").And().DoNotHaveName(nameof(Entity))
             .Should()
             .HaveAllPropertiesWithoutPublicSetters()
             .GetResult();

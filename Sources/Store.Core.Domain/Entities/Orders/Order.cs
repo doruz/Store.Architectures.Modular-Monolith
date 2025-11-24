@@ -1,8 +1,9 @@
 ﻿using EnsureThat;
+using Store.Shared;
 
 namespace Store.Core.Domain.Entities;
 
-public sealed class Order(string customerId, params IEnumerable<OrderLine> lines) : BaseEntity
+public sealed class Order(string customerId, params IEnumerable<OrderLine> lines) : Entity
 {
     public string CustomerId { get; } = EnsureArg.IsNotNullOrEmpty(customerId);
 

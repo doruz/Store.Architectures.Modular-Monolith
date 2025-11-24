@@ -1,4 +1,4 @@
-﻿using Store.Core.Domain.Entities;
+﻿using Store.Shared;
 
 namespace Store.Core.Business.Shared;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Store.Core.Domain;
 using Store.Core.Domain.Repositories;
 
 namespace Store.Infrastructure.Persistence.Cosmos;

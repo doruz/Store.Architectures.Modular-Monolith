@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Store.Core.Domain.Entities;
+using Store.Shared;
 
 namespace Store.Core.Domain.Tests.Entities;
 

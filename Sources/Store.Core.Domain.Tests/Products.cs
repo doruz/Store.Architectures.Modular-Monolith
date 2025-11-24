@@ -1,6 +1,4 @@
-﻿using Store.Core.Domain.Entities;
-
-namespace Store.Core.Domain.Tests;
+﻿namespace Store.Core.Domain.Tests;
 
 internal static class Products
 {

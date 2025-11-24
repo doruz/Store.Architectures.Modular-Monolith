@@ -1,4 +1,5 @@
 ﻿using EnsureThat;
+using Store.Shared;
 
 namespace Store.Core.Domain.Entities;
 

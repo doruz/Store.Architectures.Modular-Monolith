@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Store.Shared;
 
 namespace Store.Core.Shared.Tests.Extensions;
 

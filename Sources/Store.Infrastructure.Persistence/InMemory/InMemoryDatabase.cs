@@ -1,4 +1,5 @@
-﻿using Store.Core.Domain.Entities;
+﻿using Store.Core.Domain;
+using Store.Core.Domain.Entities;
 
 namespace Store.Infrastructure.Persistence.InMemory
 {

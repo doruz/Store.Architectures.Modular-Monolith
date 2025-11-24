@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Domain.Entities;
+﻿namespace Store.Shared;
 
 public static class PriceExtensions
 {

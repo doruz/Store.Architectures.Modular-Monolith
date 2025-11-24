@@ -1,6 +1,8 @@
 ﻿using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
+using Store.Shared;
+using AppErrors = Store.Shared.AppErrors;
 
 namespace Store.Core.Business.Orders;
 
@@ -9,9 +11,8 @@ internal sealed class FindCustomerOrderQueryHandler(RepositoriesContext reposito
 {
     public async Task<FindCustomerOrderQueryResult> Handle(FindCustomerOrderQuery request, CancellationToken _)
     {
-        var order = await repositories.Orders
-            .FindOrderAsync(currentCustomer.Id, request.OrderId)
-            .EnsureIsNotNull(request.OrderId);
+        var order = await AppErrors.EnsureIsNotNull(repositories.Orders
+                .FindOrderAsync(currentCustomer.Id, request.OrderId), request.OrderId);
 
         return order.Map(ToOrderDetailedModel);
     }

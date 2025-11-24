@@ -2,7 +2,6 @@
 global using MediatR;
 
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Store.Core.Business;
 

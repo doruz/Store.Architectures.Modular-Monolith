@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Rocks;
-using Store.Core.Shared;
+using Store.Shared;
 
 namespace Store.Tests;
 

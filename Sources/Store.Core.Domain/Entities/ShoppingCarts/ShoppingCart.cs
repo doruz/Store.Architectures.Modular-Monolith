@@ -1,8 +1,9 @@
 ﻿using EnsureThat;
+using Store.Shared;
 
 namespace Store.Core.Domain.Entities;
 
-public sealed class ShoppingCart(params IEnumerable<ShoppingCartLine> lines) : BaseEntity
+public sealed class ShoppingCart(params IEnumerable<ShoppingCartLine> lines) : Entity
 {
     public IReadOnlyList<ShoppingCartLine> Lines { get; private set; } = lines.ToList();
 
@@ -13,7 +14,7 @@ public sealed class ShoppingCart(params IEnumerable<ShoppingCartLine> lines) : B
         => Lines.All(line => line.Quantity == 0);
 
     public void UpdateOrRemoveLines(params ShoppingCartLine[] lines)
-        => lines.Merge().ForEach(UpdateOrRemoveLine);
+        => EnumerableExtensions.ForEach(lines.Merge(), UpdateOrRemoveLine);
 
     public void UpdateOrRemoveLine(ShoppingCartLine line)
     {
