@@ -1,4 +1,4 @@
-﻿using Store.Core.Shared;
+﻿using Store.Shared;
 
 internal sealed class AppInitializationService(IEnumerable<IAppInitializer> initializers) 
     : IHostedService

@@ -1,6 +1,4 @@
-﻿using Store.Core.Shared;
-
-namespace Store.Orders.Business;
+﻿namespace Store.Orders.Business;
 
 public record ValueLabelModel<T>(T Value, string Label)
 {
@@ -10,5 +8,5 @@ public record ValueLabelModel<T>(T Value, string Label)
 internal static class ValueLabelModelExtensions
 {
     internal static ValueLabelModel<DateTime> ToDateTimeModel(this DateTime orderedAt)
-        => new(orderedAt, orderedAt.ToDateTimeString());
+        => new(orderedAt, orderedAt.ToString("dd MMM yyyy, HH:mm"));
 }
