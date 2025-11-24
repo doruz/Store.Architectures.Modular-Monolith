@@ -1,5 +1,4 @@
 ﻿using Store.Core.Business.Products;
-using Store.Core.Business.Shared;
 using Store.Core.Shared;
 
 [ApiRoute("admins/products")]

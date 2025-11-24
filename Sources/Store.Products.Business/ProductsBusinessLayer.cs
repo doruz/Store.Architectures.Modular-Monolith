@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿global using MediatR;
+
+using System.Reflection;
 
 namespace Store.Products.Business;
 

@@ -3,6 +3,7 @@ using System.Text.Json;
 using Store.Core.Business;
 using Store.Core.Shared;
 using Store.Infrastructure.Persistence;
+using Store.Products.Business;
 
 public static class ApiLayer
 {
@@ -12,8 +13,8 @@ public static class ApiLayer
     {
         return services
 
-            .AddBusiness()
             .AddPersistence(configuration)
+            .AddMediator()
 
             .AddTransient<ICurrentCustomer, CurrentCustomer>()
             .AddHostedService<AppInitializationService>();
@@ -33,5 +34,16 @@ public static class ApiLayer
                 return Task.CompletedTask;
             });
         });
+    }
+
+    private static IServiceCollection AddMediator(this IServiceCollection services)
+    {
+        var assemblies = new[]
+        {
+            BusinessLayer.Assembly,
+            ProductsBusinessLayer.Assembly
+        };
+
+        return services.AddMediatR(config => config.RegisterServicesFromAssemblies(assemblies));
     }
 }
