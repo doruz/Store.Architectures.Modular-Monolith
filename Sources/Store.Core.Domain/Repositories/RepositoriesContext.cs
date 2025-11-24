@@ -1,4 +1,5 @@
 ﻿using Store.Products.Domain;
+using Store.ShoppingCarts.Domain;
 
 namespace Store.Core.Domain.Repositories;
 

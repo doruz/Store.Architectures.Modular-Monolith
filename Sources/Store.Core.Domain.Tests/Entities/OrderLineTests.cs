@@ -2,6 +2,7 @@
 using Store.Core.Domain.Entities;
 using Store.Products.Domain;
 using Store.Shared;
+using Store.ShoppingCarts.Domain;
 
 namespace Store.Core.Domain.Tests.Entities;
 

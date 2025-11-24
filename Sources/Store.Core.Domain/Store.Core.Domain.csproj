@@ -9,6 +9,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Store.Core.Shared\Store.Core.Shared.csproj" />
 	  <ProjectReference Include="..\Store.Products.Domain\Store.Products.Domain.csproj" />
+	  <ProjectReference Include="..\Store.ShoppingCarts.Domain\Store.ShoppingCarts.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

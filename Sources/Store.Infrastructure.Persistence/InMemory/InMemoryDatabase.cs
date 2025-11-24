@@ -1,5 +1,6 @@
 ﻿using Store.Core.Domain.Entities;
 using Store.Products.Domain;
+using Store.ShoppingCarts.Domain;
 
 namespace Store.Infrastructure.Persistence.InMemory
 {

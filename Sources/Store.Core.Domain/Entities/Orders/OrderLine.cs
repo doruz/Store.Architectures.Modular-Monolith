@@ -1,6 +1,7 @@
 ﻿using EnsureThat;
 using Store.Products.Domain;
 using Store.Shared;
+using Store.ShoppingCarts.Domain;
 
 namespace Store.Core.Domain.Entities;
 

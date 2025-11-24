@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Store.Core.Domain.Repositories;
 using Store.Products.Domain;
+using Store.ShoppingCarts.Domain;
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
