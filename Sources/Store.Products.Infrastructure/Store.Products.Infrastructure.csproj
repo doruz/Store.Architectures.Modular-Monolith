@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Store.Presentation.Api.IntegrationTests" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Store.Products.Domain\Store.Products.Domain.csproj" />
     <ProjectReference Include="..\Store.Shared.Infrastructure\Store.Shared.Infrastructure.csproj" />

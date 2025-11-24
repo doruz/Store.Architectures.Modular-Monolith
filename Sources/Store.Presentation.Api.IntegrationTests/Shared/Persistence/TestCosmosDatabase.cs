@@ -1,13 +1,14 @@
 ﻿using EnsureThat;
-using Store.Infrastructure.Persistence.Cosmos;
 using Store.Orders.Domain;
 using Store.Orders.Infrastructure.Cosmos;
 using Store.Products.Domain;
+using Store.Products.Infrastructure.Cosmos;
 using Store.Shared;
+using Store.Shared.Infrastructure.Cosmos;
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContainers, CosmosOrdersDatabase ordersDb)
+internal sealed class TestCosmosDatabase(CosmosProductsDatabase productsDb, CosmosOrdersDatabase ordersDb)
 {
     public async Task EnsureIsInitialized()
     {
@@ -33,7 +34,7 @@ internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContaine
 
         foreach (var product in TestProducts.All)
         {
-            await cosmosContainers.Products.UpsertItemAsync(product);
+            await productsDb.Products.UpsertItemAsync(product);
         }
     }
 
@@ -41,15 +42,15 @@ internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContaine
     {
         EnsureIsTestDatabase();
 
-        await cosmosContainers.Products
+        await productsDb.Products
             .GetItemLinqQueryable<Product>(true)
             .AsEnumerable()
             .ForEachAsync(async p =>
             {
-                await cosmosContainers.Products.DeleteAsync<Product>(p.Id, p.Id.ToPartitionKey());
+                await productsDb.Products.DeleteAsync<Product>(p.Id, p.Id.ToPartitionKey());
             });
     }
 
     private void EnsureIsTestDatabase()
-        => EnsureArg.IsTrue(cosmosContainers.Products.Database.Id.Contains("Tests"));
+        => EnsureArg.IsTrue(productsDb.Products.Database.Id.Contains("Tests"));
 }

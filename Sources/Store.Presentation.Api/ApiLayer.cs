@@ -7,6 +7,7 @@ using Store.Orders.Infrastructure;
 using Store.Products.Business;
 using Store.Products.Infrastructure;
 using Store.Shared;
+using Store.Shared.Infrastructure;
 using Store.ShoppingCarts.Business;
 using Store.ShoppingCarts.Infrastructure;
 
@@ -21,6 +22,7 @@ public static class ApiLayer
             .AddPersistence(configuration)
             .AddMediator()
 
+            .AddSharedInfrastructure(configuration)
             .AddOrdersInfrastructure(configuration)
             .AddShoppingCartsInfrastructure(configuration)
             .AddProductsInfrastructure(configuration)
