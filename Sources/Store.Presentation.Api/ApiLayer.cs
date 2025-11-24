@@ -7,6 +7,7 @@ using Store.Orders.Infrastructure;
 using Store.Products.Business;
 using Store.Shared;
 using Store.ShoppingCarts.Business;
+using Store.ShoppingCarts.Infrastructure;
 
 public static class ApiLayer
 {
@@ -20,6 +21,7 @@ public static class ApiLayer
             .AddMediator()
 
             .AddOrdersInfrastructure(configuration)
+            .AddShoppingCartsInfrastructure(configuration)
 
             .AddTransient<ICurrentCustomer, CurrentCustomer>()
             .AddHostedService<AppInitializationService>();

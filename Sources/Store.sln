@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Orders.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Shared.Infrastructure", "Store.Shared.Infrastructure\Store.Shared.Infrastructure.csproj", "{40EBE2BE-A66A-4C6A-80C3-44167EDDC898}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.ShoppingCarts.Infrastructure", "Store.ShoppingCarts.Infrastructure\Store.ShoppingCarts.Infrastructure.csproj", "{27CD6A06-7400-4EA2-A32E-35846904378C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{40EBE2BE-A66A-4C6A-80C3-44167EDDC898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40EBE2BE-A66A-4C6A-80C3-44167EDDC898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40EBE2BE-A66A-4C6A-80C3-44167EDDC898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27CD6A06-7400-4EA2-A32E-35846904378C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CD6A06-7400-4EA2-A32E-35846904378C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CD6A06-7400-4EA2-A32E-35846904378C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CD6A06-7400-4EA2-A32E-35846904378C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{B24784F9-B307-4DD8-870B-8F9AC7789DF2} = {39F70224-F686-4EE5-AF55-E623304BC0E2}
 		{5F875A45-7C47-4F05-9812-8763D3959760} = {39F70224-F686-4EE5-AF55-E623304BC0E2}
 		{40EBE2BE-A66A-4C6A-80C3-44167EDDC898} = {8F581844-FD7F-40F0-A237-8E0F2945BA56}
+		{27CD6A06-7400-4EA2-A32E-35846904378C} = {8D884AF1-3230-4B93-811B-190B90C92FE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {033F0723-31BA-4866-8ACB-AA9E4E4AD336}

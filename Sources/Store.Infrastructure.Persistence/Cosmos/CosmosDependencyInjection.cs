@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Store.Products.Domain;
-using Store.ShoppingCarts.Domain;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal static class CosmosDependencyInjection
 {
-    internal static IServiceCollection AddCosmosPersistence(this IServiceCollection services, IConfiguration configuration) =>
+    internal static IServiceCollection AddCosmosPersistence(this IServiceCollection services,
+        IConfiguration configuration) =>
         services
             .Configure<CosmosOptions>(configuration.GetRequiredSection(nameof(CosmosOptions)).Bind)
 
@@ -15,6 +15,5 @@ internal static class CosmosDependencyInjection
             .AddSingleton<CosmosDatabaseContainers>()
             .AddSingleton<IAppInitializer, CosmosDatabaseInitializer>()
 
-            .AddSingleton<IProductsRepository, CosmosProductsRepository>()
-            .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>();
+            .AddSingleton<IProductsRepository, CosmosProductsRepository>();
 }
