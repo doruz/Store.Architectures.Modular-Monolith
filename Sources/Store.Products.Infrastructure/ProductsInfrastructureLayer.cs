@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+
+using Store.Shared;
 using Store.Products.Domain;
 using Store.Products.Infrastructure.Cosmos;
-using Store.Shared;
 
 namespace Store.Products.Infrastructure;
 
@@ -13,20 +14,17 @@ public static class ProductsInfrastructureLayer
 
     public static IServiceCollection AddProductsInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        return services
-            .Configure<CosmosProductsOptions>(configuration.GetRequiredSection(CosmosProductsOptions.Section).Bind)
+        if (configuration.UseCosmos())
+        {
+            return services
+                .Configure<CosmosProductsOptions>(configuration.GetRequiredSection(CosmosProductsOptions.Section).Bind)
 
-        .AddSingleton<CosmosProductsDatabase>()
-        .AddSingleton<IAppInitializer, CosmosProductsDatabase>()
+                .AddSingleton<CosmosProductsDatabase>()
+                .AddSingleton<IAppInitializer, CosmosProductsDatabase>()
+                .AddSingleton<IProductsRepository, CosmosProductsRepository>();
+        }
 
-        .AddRepository(configuration);
-    }
-
-    private static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
-    {
-        return configuration.UseCosmos() 
-            ? services.AddSingleton<IProductsRepository, CosmosProductsRepository>() 
-            : services.AddSingleton<IProductsRepository, InMemoryProductsRepository>();
+        return services.AddSingleton<IProductsRepository, InMemoryProductsRepository>();
     }
 
     private static bool UseCosmos(this IConfiguration configuration)

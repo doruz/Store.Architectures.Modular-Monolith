@@ -15,20 +15,17 @@ public static class ShoppingCartsInfrastructureLayer
 
     public static IServiceCollection AddShoppingCartsInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        return services
-            .Configure<CosmosShoppingCartsOptions>(configuration.GetRequiredSection(CosmosShoppingCartsOptions.Section).Bind)
+        if (configuration.UseCosmos())
+        {
+            return services
+                .Configure<CosmosShoppingCartsOptions>(configuration.GetRequiredSection(CosmosShoppingCartsOptions.Section).Bind)
 
-            .AddSingleton<CosmosShoppingCartsDatabase>()
-            .AddSingleton<IAppInitializer, CosmosShoppingCartsDatabase>()
+                .AddSingleton<CosmosShoppingCartsDatabase>()
+                .AddSingleton<IAppInitializer, CosmosShoppingCartsDatabase>()
+                .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>();
+        }
 
-            .AddRepository(configuration);
-    }
-
-    private static IServiceCollection AddRepository(this IServiceCollection services, IConfiguration configuration)
-    {
-        return configuration.UseCosmos()
-            ? services.AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>()
-            : services.AddSingleton<IShoppingCartsRepository, InMemoryShoppingCartsRepository>();
+        return services.AddSingleton<IShoppingCartsRepository, InMemoryShoppingCartsRepository>();
     }
 
     private static bool UseCosmos(this IConfiguration configuration)
