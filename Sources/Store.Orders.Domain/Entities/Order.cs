@@ -1,7 +1,7 @@
 ﻿using EnsureThat;
 using Store.Shared;
 
-namespace Store.Core.Domain.Entities;
+namespace Store.Orders.Domain;
 
 public sealed class Order(string customerId, params IEnumerable<OrderLine> lines) : Entity
 {

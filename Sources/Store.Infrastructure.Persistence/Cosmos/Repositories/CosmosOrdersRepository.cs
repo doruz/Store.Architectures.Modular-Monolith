@@ -1,7 +1,6 @@
 ﻿using EnsureThat;
 using Microsoft.Azure.Cosmos;
-using Store.Core.Domain.Entities;
-using Store.Core.Domain.Repositories;
+using Store.Orders.Domain;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 

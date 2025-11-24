@@ -1,5 +1,5 @@
-﻿using Store.Core.Domain.Entities;
-using Store.Core.Domain.Repositories;
+﻿using Store.Core.Domain.Repositories;
+using Store.Orders.Domain;
 using Store.Shared;
 using AppErrors = Store.Shared.AppErrors;
 

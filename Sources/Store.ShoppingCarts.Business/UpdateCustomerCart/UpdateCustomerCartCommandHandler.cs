@@ -1,5 +1,4 @@
-﻿using Store.Core.Domain.Entities;
-using Store.Core.Domain.Repositories;
+﻿using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 using Store.Products.Domain;
 using Store.ShoppingCarts.Domain;

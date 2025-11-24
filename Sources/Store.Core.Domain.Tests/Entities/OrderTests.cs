@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Store.Core.Domain.Entities;
+using Store.Orders.Domain;
 using Store.Shared;
 using Store.ShoppingCarts.Domain;
 

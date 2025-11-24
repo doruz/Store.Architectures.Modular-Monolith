@@ -3,7 +3,7 @@ using Store.Products.Domain;
 using Store.Shared;
 using Store.ShoppingCarts.Domain;
 
-namespace Store.Core.Domain.Entities;
+namespace Store.Orders.Domain;
 
 public sealed record OrderLine
 {

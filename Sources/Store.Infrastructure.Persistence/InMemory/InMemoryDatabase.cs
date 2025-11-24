@@ -1,4 +1,4 @@
-﻿using Store.Core.Domain.Entities;
+﻿using Store.Orders.Domain;
 using Store.Products.Domain;
 using Store.ShoppingCarts.Domain;
 

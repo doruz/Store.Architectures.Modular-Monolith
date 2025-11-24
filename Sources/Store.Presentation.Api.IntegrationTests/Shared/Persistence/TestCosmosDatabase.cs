@@ -1,6 +1,6 @@
 ﻿using EnsureThat;
-using Store.Core.Domain.Entities;
 using Store.Infrastructure.Persistence.Cosmos;
+using Store.Orders.Domain;
 using Store.Products.Domain;
 using Store.Shared;
 

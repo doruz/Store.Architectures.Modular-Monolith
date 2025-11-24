@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Store.Core.Domain.Entities;
 using Store.ShoppingCarts.Domain;
 
 namespace Store.Core.Domain.Tests.Entities;
