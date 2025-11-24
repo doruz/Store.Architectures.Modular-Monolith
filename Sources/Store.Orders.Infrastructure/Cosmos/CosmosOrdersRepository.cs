@@ -1,10 +1,11 @@
 ﻿using EnsureThat;
 using Microsoft.Azure.Cosmos;
 using Store.Orders.Domain;
+using Store.Shared.Infrastructure.Cosmos;
 
-namespace Store.Infrastructure.Persistence.Cosmos;
+namespace Store.Orders.Infrastructure.Cosmos;
 
-internal sealed class CosmosOrdersRepository(CosmosDatabaseContainers containers) : IOrdersRepository
+internal sealed class CosmosOrdersRepository(CosmosOrdersDatabase db) : IOrdersRepository
 {
     public Task<IEnumerable<Order>> GetCustomerOrdersAsync(string customerId)
     {
@@ -15,20 +16,20 @@ internal sealed class CosmosOrdersRepository(CosmosDatabaseContainers containers
             PartitionKey = customerId.ToPartitionKey()
         };
 
-        var orders = containers.Orders
+        var orders = db.Orders
             .GetItemLinqQueryable<Order>(true, requestOptions: requestOptions)
             .AsEnumerable();
 
         return Task.FromResult(orders);
     }
 
-    public Task<Order?> FindOrderAsync(string customerId, string id) 
-        => containers.Orders.FindAsync<Order>(id, customerId.ToPartitionKey());
+    public Task<Order?> FindOrderAsync(string customerId, string id)
+        => db.Orders.FindAsync<Order>(id, customerId.ToPartitionKey());
 
     public async Task SaveOrderAsync(Order order)
     {
         EnsureArg.IsNotNull(order, nameof(order));
 
-        await containers.Orders.UpsertItemAsync(order);
+        await db.Orders.UpsertItemAsync(order);
     }
 }

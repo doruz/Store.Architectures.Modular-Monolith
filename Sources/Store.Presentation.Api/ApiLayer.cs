@@ -3,6 +3,7 @@ using System.Text.Json;
 using Store.Core.Business;
 using Store.Infrastructure.Persistence;
 using Store.Orders.Business;
+using Store.Orders.Infrastructure;
 using Store.Products.Business;
 using Store.Shared;
 using Store.ShoppingCarts.Business;
@@ -17,6 +18,8 @@ public static class ApiLayer
 
             .AddPersistence(configuration)
             .AddMediator()
+
+            .AddOrdersInfrastructure(configuration)
 
             .AddTransient<ICurrentCustomer, CurrentCustomer>()
             .AddHostedService<AppInitializationService>();

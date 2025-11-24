@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Store.Orders.Domain;
 using Store.Products.Domain;
 using Store.ShoppingCarts.Domain;
 
@@ -17,6 +16,5 @@ internal static class CosmosDependencyInjection
             .AddSingleton<IAppInitializer, CosmosDatabaseInitializer>()
 
             .AddSingleton<IProductsRepository, CosmosProductsRepository>()
-            .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>()
-            .AddSingleton<IOrdersRepository, CosmosOrdersRepository>();
+            .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>();
 }

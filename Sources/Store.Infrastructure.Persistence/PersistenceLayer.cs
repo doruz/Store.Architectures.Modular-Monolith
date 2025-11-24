@@ -1,5 +1,4 @@
-﻿global using Store.Core.Shared;
-global using Store.Shared;
+﻿global using Store.Shared;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

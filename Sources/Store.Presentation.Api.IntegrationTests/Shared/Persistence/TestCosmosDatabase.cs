@@ -1,12 +1,13 @@
 ﻿using EnsureThat;
 using Store.Infrastructure.Persistence.Cosmos;
 using Store.Orders.Domain;
+using Store.Orders.Infrastructure.Cosmos;
 using Store.Products.Domain;
 using Store.Shared;
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContainers)
+internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContainers, CosmosOrdersDatabase ordersDb)
 {
     public async Task EnsureIsInitialized()
     {
@@ -18,12 +19,12 @@ internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContaine
     {
         EnsureIsTestDatabase();
 
-        return cosmosContainers.Orders.DeleteAllItemsByPartitionKeyStreamAsync(customerId.ToPartitionKey());
+        return ordersDb.Orders.DeleteAllItemsByPartitionKeyStreamAsync(customerId.ToPartitionKey());
     }
 
     public Task<Order?> FindCustomerOrder(string customerId, string orderId)
     {
-        return cosmosContainers.Orders.FindAsync<Order>(orderId, customerId.ToPartitionKey());
+        return ordersDb.Orders.FindAsync<Order>(orderId, customerId.ToPartitionKey());
     }
 
     private async Task AddTestProducts()
