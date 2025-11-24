@@ -1,19 +1,18 @@
-﻿using Store.Core.Domain.Entities;
-using Store.Core.Domain.Repositories;
+﻿using Store.Core.Domain;
 
 namespace Store.Core.Business.Products;
 
-internal sealed class DeleteProductCommandHandler(RepositoriesContext repositories)
+internal sealed class DeleteProductCommandHandler(IProductsRepository products)
     : IRequestHandler<DeleteProductCommand>
 {
     public async Task Handle(DeleteProductCommand command, CancellationToken _)
     {
-        var product = await repositories.Products
+        var product = await products
             .FindAsync(command.Id)
             .EnsureExists(command.Id);
 
         product.MarkAsDeleted();
 
-        await repositories.Products.UpdateAsync(product);
+        await products.UpdateAsync(product);
     }
 }

@@ -1,6 +1,4 @@
-﻿using Store.Core.Domain.Entities;
-
-namespace Store.Core.Business.Products;
+﻿namespace Store.Core.Business.Products;
 
 public sealed record PriceModel(decimal Value, string Currency, string Display)
 {

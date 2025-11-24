@@ -1,4 +1,5 @@
 ﻿global using MediatR;
+global using Store.Shared;
 
 using System.Reflection;
 

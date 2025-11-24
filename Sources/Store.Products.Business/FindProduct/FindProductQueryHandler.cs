@@ -1,14 +1,12 @@
-﻿using Store.Core.Domain.Entities;
-using Store.Core.Domain.Repositories;
-using Store.Core.Shared;
+﻿using Store.Core.Domain;
 
 namespace Store.Core.Business.Products;
 
-internal sealed class FindProductQueryHandler(RepositoriesContext repositories)
+internal sealed class FindProductQueryHandler(IProductsRepository products)
     : IRequestHandler<FindProductQuery, GetProductModel>
 {
     public async Task<GetProductModel> Handle(FindProductQuery query, CancellationToken _) =>
-        await repositories.Products
+        await products
             .FindAsync(query.Id)
             .EnsureExists(query.Id)
             .MapAsync(GetProductModel.Create);

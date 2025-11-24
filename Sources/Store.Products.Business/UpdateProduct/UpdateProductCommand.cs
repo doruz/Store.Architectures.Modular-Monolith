@@ -1,5 +1,4 @@
-﻿using Store.Core.Shared;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using EnsureThat;
 
 namespace Store.Core.Business.Products;

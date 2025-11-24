@@ -1,15 +1,15 @@
-﻿using Store.Core.Domain.Repositories;
+﻿using Store.Core.Domain;
 
 namespace Store.Core.Business.Products;
 
-internal sealed class GetProductsQueryHandler(RepositoriesContext repositories)
+internal sealed class GetProductsQueryHandler(IProductsRepository products)
     : IRequestHandler<GetProductsQuery, IEnumerable<GetProductModel>>
 {
     public async Task<IEnumerable<GetProductModel>> Handle(GetProductsQuery query, CancellationToken _)
     {
-        var products = await repositories.Products.GetAsync(query.Filter);
+        var filteredProducts = await products.GetAsync(query.Filter);
 
-        return products
+        return filteredProducts
             .OrderBy(p => p.Name, StringComparer.InvariantCultureIgnoreCase)
             .Select(GetProductModel.Create);
     }
