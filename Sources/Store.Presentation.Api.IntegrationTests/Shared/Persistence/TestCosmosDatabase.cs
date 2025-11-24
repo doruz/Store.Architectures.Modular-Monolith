@@ -1,7 +1,7 @@
 ﻿using EnsureThat;
-using Store.Core.Domain;
 using Store.Core.Domain.Entities;
 using Store.Infrastructure.Persistence.Cosmos;
+using Store.Products.Domain;
 using Store.Shared;
 
 namespace Store.Presentation.Api.IntegrationTests;

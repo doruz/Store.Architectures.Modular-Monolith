@@ -1,7 +1,7 @@
-﻿using Store.Core.Domain;
-using Store.Core.Domain.Entities;
+﻿using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
+using Store.Products.Domain;
 
 namespace Store.ShoppingCarts.Business;
 
@@ -27,7 +27,7 @@ internal sealed class CheckoutCustomerCartCommandHandler(IShoppingCartsRepositor
         return new IdModel(customerOrder.Id);
     }
 
-    private async Task<List<(ShoppingCartLine CartLine, Product Product)>> GetShoppingCartItems()
+    private async Task<List<(ShoppingCartLine CartLine, Products.Domain.Product Product)>> GetShoppingCartItems()
     {
         var shoppingCart = await shoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
@@ -43,7 +43,7 @@ internal sealed class CheckoutCustomerCartCommandHandler(IShoppingCartsRepositor
             .ToListAsync();
     }
 
-    private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, Product Product)> items)
+    private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, Products.Domain.Product Product)> items)
     {
         foreach (var item in items)
         {

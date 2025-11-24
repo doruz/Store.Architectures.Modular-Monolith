@@ -1,6 +1,6 @@
 ﻿using Store.Shared;
 
-namespace Store.Core.Domain;
+namespace Store.Products.Domain;
 
 public static class ProductErrors
 {

@@ -1,7 +1,7 @@
 ﻿using EnsureThat;
 using Store.Shared;
 
-namespace Store.Core.Domain;
+namespace Store.Products.Domain;
 
 public sealed class Product(string name, Price price, int stock) : Entity
 {

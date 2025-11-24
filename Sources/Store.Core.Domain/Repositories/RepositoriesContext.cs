@@ -1,4 +1,6 @@
-﻿namespace Store.Core.Domain.Repositories;
+﻿using Store.Products.Domain;
+
+namespace Store.Core.Domain.Repositories;
 
 // TODO: this will be removed at the end of the migration
 public sealed class RepositoriesContext(

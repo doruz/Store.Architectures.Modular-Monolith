@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using EnsureThat;
 using Microsoft.Azure.Cosmos;
-using Store.Shared;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 

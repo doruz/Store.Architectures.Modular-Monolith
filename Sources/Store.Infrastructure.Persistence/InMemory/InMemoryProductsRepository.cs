@@ -1,5 +1,5 @@
 ﻿using EnsureThat;
-using Store.Core.Domain;
+using Store.Products.Domain;
 
 namespace Store.Infrastructure.Persistence.InMemory;
 

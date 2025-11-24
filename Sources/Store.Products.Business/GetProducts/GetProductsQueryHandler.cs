@@ -1,4 +1,4 @@
-﻿using Store.Core.Domain;
+﻿using Store.Products.Domain;
 
 namespace Store.Core.Business.Products;
 

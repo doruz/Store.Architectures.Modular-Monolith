@@ -1,5 +1,5 @@
-﻿using Store.Core.Domain;
-using Store.Core.Domain.Entities;
+﻿using Store.Core.Domain.Entities;
+using Store.Products.Domain;
 
 namespace Store.Infrastructure.Persistence.InMemory
 {

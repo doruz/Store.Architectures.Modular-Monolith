@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Store.Core.Domain;
 using Store.Core.Domain.Repositories;
+using Store.Products.Domain;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 

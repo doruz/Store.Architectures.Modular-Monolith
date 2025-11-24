@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Domain;
+﻿namespace Store.Products.Domain;
 
 public interface IProductsRepository
 {
