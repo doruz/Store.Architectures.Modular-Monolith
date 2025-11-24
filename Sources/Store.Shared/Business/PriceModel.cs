@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Business.Products;
+﻿namespace Store.Shared;
 
 public sealed record PriceModel(decimal Value, string Currency, string Display)
 {

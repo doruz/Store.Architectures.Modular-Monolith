@@ -18,7 +18,7 @@ internal sealed class GetCustomerOrdersQueryHandler(RepositoriesContext reposito
     private static OrderSummaryModel ToOrderSummaryModel(Order order) => new()
     {
         Id = order.Id,
-        OrderedAt = order.CreatedAt.ToDateTimeModel(),
+        OrderedAt = DateTimeModel.Create(order.CreatedAt),
 
         TotalProducts = order.TotalProducts,
         TotalPrice = PriceModel.Create(order.TotalPrice)
