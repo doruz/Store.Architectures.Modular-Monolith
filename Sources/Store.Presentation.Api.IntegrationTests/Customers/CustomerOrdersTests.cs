@@ -1,4 +1,4 @@
-﻿using Store.Core.Business.Shared;
+﻿using Store.Core.Business.Products;
 
 namespace Store.Presentation.Api.IntegrationTests.Customers;
 

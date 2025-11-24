@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Store.Core.Shared;
+using Store.Shared;
 
 /// <summary>
 /// In case a specific app error is thrown to return correct status code to the client.

@@ -1,8 +1,7 @@
 ﻿using Store.Core.Domain.Repositories;
 using Store.Orders.Domain;
-using Store.Shared;
 
-namespace Store.Core.Business.Orders;
+namespace Store.Orders.Business;
 
 internal sealed class GetCustomerOrdersQueryHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
     : IRequestHandler<GetCustomerOrdersQuery, IEnumerable<OrderSummaryModel>>

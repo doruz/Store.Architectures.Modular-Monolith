@@ -1,17 +1,16 @@
 ﻿using Store.Core.Domain.Repositories;
 using Store.Orders.Domain;
-using Store.Shared;
-using AppErrors = Store.Shared.AppErrors;
 
-namespace Store.Core.Business.Orders;
+namespace Store.Orders.Business;
 
 internal sealed class FindCustomerOrderQueryHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
     : IRequestHandler<FindCustomerOrderQuery, FindCustomerOrderQueryResult>
 {
     public async Task<FindCustomerOrderQueryResult> Handle(FindCustomerOrderQuery request, CancellationToken _)
     {
-        var order = await AppErrors.EnsureIsNotNull(repositories.Orders
-                .FindOrderAsync(currentCustomer.Id, request.OrderId), request.OrderId);
+        var order = await repositories.Orders
+            .FindOrderAsync(currentCustomer.Id, request.OrderId)
+            .EnsureIsNotNull(request.OrderId);
 
         return order.Map(ToOrderDetailedModel);
     }

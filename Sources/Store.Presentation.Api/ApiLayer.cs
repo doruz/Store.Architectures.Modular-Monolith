@@ -2,8 +2,10 @@
 using System.Text.Json;
 using Store.Core.Business;
 using Store.Infrastructure.Persistence;
+using Store.Orders.Business;
 using Store.Products.Business;
 using Store.Shared;
+using Store.ShoppingCarts.Business;
 
 public static class ApiLayer
 {
@@ -41,7 +43,9 @@ public static class ApiLayer
         var assemblies = new[]
         {
             BusinessLayer.Assembly,
-            ProductsBusinessLayer.Assembly
+            ProductsBusinessLayer.Assembly,
+            ShoppingCartsBusinessLayer.Assembly,
+            OrdersBusinessLayer.Assembly
         };
 
         return services.AddMediatR(config => config.RegisterServicesFromAssemblies(assemblies));

@@ -1,5 +1,5 @@
-﻿using Store.Core.Business.Orders;
-using Store.Core.Shared;
+﻿using Store.Orders.Business;
+using Store.Shared;
 
 [ApiRoute("customers/current/orders")]
 public sealed class CustomersOrdersController(IMediator mediator) : BaseApiController(mediator)

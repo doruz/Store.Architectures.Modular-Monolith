@@ -1,6 +1,6 @@
 ﻿using Store.Core.Shared;
 
-namespace Store.Core.Business.Shared;
+namespace Store.Orders.Business;
 
 public record ValueLabelModel<T>(T Value, string Label)
 {

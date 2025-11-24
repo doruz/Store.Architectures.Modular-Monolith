@@ -1,5 +1,5 @@
 ﻿using Store.Core.Business.Products;
-using Store.Core.Shared;
+using Store.Shared;
 
 [ApiRoute("admins/products")]
 public sealed class AdminProductsController(IMediator mediator) : BaseApiController(mediator)
