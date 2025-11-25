@@ -1,12 +1,10 @@
 ﻿using EnsureThat;
-using Store.Core.Domain.Repositories;
-using Store.Core.Shared;
-using Store.Products.Domain;
+using Store.Products.Contracts;
 using Store.ShoppingCarts.Domain;
 
 namespace Store.ShoppingCarts.Business;
 
-internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shoppingCarts, RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shoppingCarts, ISender mediator, ICurrentCustomer currentCustomer)
     : IRequestHandler<GetCustomerCartQuery, GetCustomerCartQueryResult>
 {
     public async Task<GetCustomerCartQueryResult> Handle(GetCustomerCartQuery request, CancellationToken _)
@@ -17,7 +15,7 @@ internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shopp
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
-                Product = await repositories.Products.FindAsync(cartLine.ProductId)
+                Product = await FindProduct(cartLine.ProductId)
             })
             .ToListAsync();
 
@@ -25,19 +23,13 @@ internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shopp
             .Where(l => l.Product != null)
             .Select(l => ToShoppingCartLineModel(l.CartLine, l.Product!));
 
-        var totalCartPrice = cartLines
-            .Where(l => l.Product != null)
-            .Select(l => l.Product!.Price * l.CartLine.Quantity)
-            .Sum();
-
-        return new GetCustomerCartQueryResult
-        {
-            Lines = lines,
-            TotalPrice = PriceModel.Create(totalCartPrice)
-        };
+        return new GetCustomerCartQueryResult(lines);
     }
 
-    private static GetCustomerCartLineModel ToShoppingCartLineModel(ShoppingCartLine cartLine, Product product)
+    private async Task<FindProductResponse?> FindProduct(string id) 
+        => await mediator.Send(new FindProductRequest(id));
+
+    private static GetCustomerCartLineModel ToShoppingCartLineModel(ShoppingCartLine cartLine, FindProductResponse product)
     {
         EnsureArg.IsNotNull(cartLine, nameof(cartLine));
         EnsureArg.IsNotNull(product, nameof(product));
@@ -46,8 +38,7 @@ internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shopp
         {
             ProductId = product.Id,
             ProductName = product.Name,
-            ProductPrice = PriceModel.Create(product.Price),
-            TotalPrice = PriceModel.Create(product.Price * cartLine.Quantity),
+            ProductPrice = product.Price,
             Quantity = cartLine.Quantity,
         };
     }

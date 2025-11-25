@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace Store.Core.Shared.Tests.Extensions;
+﻿namespace Store.Core.Shared.Tests.Extensions;
 
 // TODO: this should be for ValueLabelModel
 //public class DateTimeExtensionsTests

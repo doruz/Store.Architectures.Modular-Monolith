@@ -1,5 +1,4 @@
-﻿using Store.Core.Shared;
-using Store.Shared;
+﻿using Store.Shared;
 
 namespace Store.Tests.Solution;
 

@@ -1,10 +1,8 @@
 ﻿namespace Store.ShoppingCarts.Business;
 
-public sealed record GetCustomerCartQueryResult
+public sealed record GetCustomerCartQueryResult(IEnumerable<GetCustomerCartLineModel> Lines)
 {
-    public IEnumerable<GetCustomerCartLineModel> Lines { get; init; } = [];
-
-    public required PriceModel TotalPrice { get; init; }
+    public PriceModel TotalPrice => Lines.Sum(l => l.TotalPrice);
 }
 
 public sealed record GetCustomerCartLineModel
@@ -17,5 +15,5 @@ public sealed record GetCustomerCartLineModel
 
     public required int Quantity { get; init; }
 
-    public required PriceModel TotalPrice { get; init; }
+    public PriceModel TotalPrice => ProductPrice * Quantity;
 }
