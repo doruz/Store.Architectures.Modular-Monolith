@@ -2,8 +2,7 @@
 
 namespace Store.ShoppingCarts.Business;
 
-public sealed record UpdateCustomerCartCommand(IEnumerable<UpdateCustomerCartLineModel> Lines)
-    : IRequest;
+public sealed record UpdateCustomerCartCommand(IEnumerable<UpdateCustomerCartLineModel> Lines) : IRequest;
 
 public sealed record UpdateCustomerCartLineModel
 {

@@ -13,7 +13,7 @@ public sealed class ShoppingCart(params IEnumerable<ShoppingCartLine> lines) : E
     public bool IsEmpty()
         => Lines.All(line => line.Quantity == 0);
 
-    public void UpdateOrRemoveLines(params ShoppingCartLine[] lines)
+    public void UpdateOrRemoveLines(params IEnumerable<ShoppingCartLine> lines)
         => lines.Merge().ForEach(UpdateOrRemoveLine);
 
     public void UpdateOrRemoveLine(ShoppingCartLine line)

@@ -15,7 +15,7 @@ internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shopp
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
-                Product = await mediator.FindProductAsync(cartLine.ProductId)
+                Product = await FindProduct(cartLine.ProductId)
             })
             .ToListAsync();
 
@@ -25,6 +25,9 @@ internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shopp
 
         return new GetCustomerCartQueryResult(lines);
     }
+
+    private Task<FindProductResponse?> FindProduct(string id)
+        => mediator.Send(new FindProductRequest(id));
 
     private static GetCustomerCartLineModel ToShoppingCartLineModel(ShoppingCartLine cartLine, FindProductResponse product)
     {

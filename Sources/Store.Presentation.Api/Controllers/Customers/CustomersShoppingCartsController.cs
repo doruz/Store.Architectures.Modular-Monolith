@@ -27,8 +27,6 @@ public sealed class CustomersShoppingCartsController(IMediator mediator) : BaseA
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> UpdateCurrentCart([FromBody] UpdateCustomerCartLineModel[] lines)
         => await HandleCommand(new UpdateCustomerCartCommand(lines));
 }
