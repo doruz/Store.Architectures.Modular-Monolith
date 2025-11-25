@@ -15,12 +15,11 @@ internal sealed class FindProductQueryHandler(IProductsRepository products) :
 
     public async Task<FindProductResponse?> Handle(FindProductRequest request, CancellationToken _)
     {
-        if (request.Id.IsEmpty())
+        var product = await products.FindAsync(request.Id);
+        if (product.DoesNotExists())
         {
             return null;
         }
-
-        var product = await products.FindAsync(request.Id);
 
         return product?.Map(p => new FindProductResponse
         {

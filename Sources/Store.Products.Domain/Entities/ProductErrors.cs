@@ -9,13 +9,16 @@ public static class ProductErrors
 
     public static Product EnsureExists(this Product? product, string productId)
     {
-        if(product is null || product.IsDeleted())
+        if(product.DoesNotExists())
         {
             throw NotFound(productId);
         }
 
-        return product;
+        return product!;
     }
+
+    public static bool DoesNotExists(this Product? product)
+        => product is null || product.IsDeleted();
 
     private static AppError NotFound(string productId)
         => AppError.NotFound("product_not_found", productId);

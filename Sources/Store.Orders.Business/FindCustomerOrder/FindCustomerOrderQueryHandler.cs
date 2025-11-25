@@ -1,14 +1,13 @@
-﻿using Store.Core.Domain.Repositories;
-using Store.Orders.Domain;
+﻿using Store.Orders.Domain;
 
 namespace Store.Orders.Business;
 
-internal sealed class FindCustomerOrderQueryHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class FindCustomerOrderQueryHandler(IOrdersRepository orders, ICurrentCustomer currentCustomer)
     : IRequestHandler<FindCustomerOrderQuery, FindCustomerOrderQueryResult>
 {
     public async Task<FindCustomerOrderQueryResult> Handle(FindCustomerOrderQuery request, CancellationToken _)
     {
-        var order = await repositories.Orders
+        var order = await orders
             .FindOrderAsync(currentCustomer.Id, request.OrderId)
             .EnsureIsNotNull(request.OrderId);
 

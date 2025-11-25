@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Store.ShoppingCarts.Business;
+namespace Store.Orders.Business;
 
-public sealed record UpdateCustomerCartCommand(IEnumerable<UpdateCustomerCartLineModel> Lines)
-    : IRequest;
+public sealed record CreateOrderCommand(CreateOrderLineModel[] Lines) : IRequest<IdModel>
+{
+    internal IEnumerable<CreateOrderLineModel> ValidLines => Lines.Where(line => line.Quantity > 0);
+}
 
-public sealed record UpdateCustomerCartLineModel
+public sealed record CreateOrderLineModel
 {
     [Required(ErrorMessage = ValidationMessages.Required)]
     [MaxLength(50, ErrorMessage = ValidationMessages.MaxLength)]

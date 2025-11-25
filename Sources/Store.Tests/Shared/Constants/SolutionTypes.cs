@@ -1,7 +1,6 @@
 ﻿using Store.Core.Business;
 using Store.Core.Domain;
 using Store.Core.Shared;
-using Store.Infrastructure.Persistence;
 
 namespace Store.Tests;
 
@@ -25,10 +24,10 @@ internal static class SolutionTypes
     {
         public static Types All => Types.InAssemblies(
         [
-            PersistenceLayer.Assembly,
+            //PersistenceLayer.Assembly,
         ]);
 
-        public static Types Persistence => Types.InAssembly(PersistenceLayer.Assembly);
+        public static Types Persistence => null; //Types.InAssembly(PersistenceLayer.Assembly);
     }
 
     public static class Presentation

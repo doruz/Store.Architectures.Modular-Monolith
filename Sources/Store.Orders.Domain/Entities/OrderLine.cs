@@ -1,10 +1,9 @@
 ﻿using EnsureThat;
-using Store.Products.Domain;
 using Store.Shared;
-using Store.ShoppingCarts.Domain;
 
 namespace Store.Orders.Domain;
 
+// TODO: maybe to create a OrderLineProduct record
 public sealed record OrderLine
 {
     public string ProductId { get; }
@@ -23,20 +22,5 @@ public sealed record OrderLine
         ProductName = EnsureArg.IsNotNullOrEmpty(productName);
         ProductPrice = EnsureArg.IsNotNull(productPrice);
         Quantity = EnsureArg.IsGte(quantity, 0);
-    }
-
-    public static OrderLine Create(ShoppingCartLine cartLine, Product product)
-    {
-        EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));
-        EnsureArg.IsInRange(cartLine.Quantity, 0, product.Stock);
-
-        return new OrderLine
-        (
-            product.Id,
-            product.Name,
-            product.Price,
-
-            cartLine.Quantity
-        );
     }
 }

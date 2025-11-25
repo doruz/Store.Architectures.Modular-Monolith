@@ -1,16 +1,15 @@
-﻿using Store.Core.Domain.Repositories;
-using Store.Orders.Domain;
+﻿using Store.Orders.Domain;
 
 namespace Store.Orders.Business;
 
-internal sealed class GetCustomerOrdersQueryHandler(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class GetCustomerOrdersQueryHandler(IOrdersRepository orders, ICurrentCustomer currentCustomer)
     : IRequestHandler<GetCustomerOrdersQuery, IEnumerable<OrderSummaryModel>>
 {
     public async Task<IEnumerable<OrderSummaryModel>> Handle(GetCustomerOrdersQuery request, CancellationToken _)
     {
-        var orders = await repositories.Orders.GetCustomerOrdersAsync(currentCustomer.Id);
+        var customerOrders = await orders.GetCustomerOrdersAsync(currentCustomer.Id);
 
-        return orders
+        return customerOrders
             .OrderByDescending(order => order.CreatedAt)
             .Select(ToOrderSummaryModel);
     }

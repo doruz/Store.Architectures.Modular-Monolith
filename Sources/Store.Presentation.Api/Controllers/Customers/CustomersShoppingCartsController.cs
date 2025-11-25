@@ -31,17 +31,4 @@ public sealed class CustomersShoppingCartsController(IMediator mediator) : BaseA
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> UpdateCurrentCart([FromBody] UpdateCustomerCartLineModel[] lines)
         => await HandleCommand(new UpdateCustomerCartCommand(lines));
-
-    /// <summary>
-    /// Make an order from current cart.
-    /// </summary>
-    [HttpPost("checkout")]
-    [ProducesResponseType<IdModel>(StatusCodes.Status201Created)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> CheckoutCart()
-    {
-        IdModel order = await Handle(new CheckoutCustomerCartCommand());
-
-        return CreatedAtRoute("OrderDetails", new { OrderId = order.Id }, order);
-    }
 }

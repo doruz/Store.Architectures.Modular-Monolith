@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Store.Orders.Domain;
 using Store.Shared;
-using Store.ShoppingCarts.Domain;
 
 namespace Store.Core.Domain.Tests.Entities;
 
@@ -11,8 +10,8 @@ public class OrderTests
 
     private static readonly OrderLine[] OrderLines = 
     [
-        OrderLine.Create(new ShoppingCartLine(Products.First.Id, 4), Products.First),
-        OrderLine.Create(new ShoppingCartLine(Products.Second.Id, 3), Products.Second),
+        new OrderLine(Products.First.Id, Products.First.Name, Products.First.Price, 4),
+        new OrderLine(Products.Second.Id, Products.Second.Name, Products.Second.Price, 3),
     ];
 
     [Fact]

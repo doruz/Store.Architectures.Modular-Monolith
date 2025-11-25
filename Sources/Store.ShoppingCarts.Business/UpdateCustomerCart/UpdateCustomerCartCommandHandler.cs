@@ -1,10 +1,9 @@
-﻿using Store.Core.Domain.Repositories;
-using Store.Products.Domain;
+﻿using Store.Products.Contracts;
 using Store.ShoppingCarts.Domain;
 
 namespace Store.ShoppingCarts.Business;
 
-internal sealed class UpdateCustomerCartCommandHandler(IShoppingCartsRepository shoppingCarts, RepositoriesContext repositories, ICurrentCustomer currentCustomer)
+internal sealed class UpdateCustomerCartCommandHandler(IShoppingCartsRepository shoppingCarts, ISender mediator, ICurrentCustomer currentCustomer)
     : IRequestHandler<UpdateCustomerCartCommand>
 {
     public async Task Handle(UpdateCustomerCartCommand request, CancellationToken _)
@@ -18,7 +17,7 @@ internal sealed class UpdateCustomerCartCommandHandler(IShoppingCartsRepository 
 
         shoppingCart.UpdateOrRemoveLines(await GetValidLines(request.Lines));
 
-        await repositories.ShoppingCarts.AddOrUpdateAsync(shoppingCart);
+        await shoppingCarts.AddOrUpdateAsync(shoppingCart);
     }
 
     private async Task<ShoppingCartLine[]> GetValidLines(IEnumerable<UpdateCustomerCartLineModel> cartLines)
@@ -27,14 +26,15 @@ internal sealed class UpdateCustomerCartCommandHandler(IShoppingCartsRepository 
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
-                Product = await repositories.Products.FindAsync(cartLine.ProductId)
+                Product = await mediator.FindProductAsync(cartLine.ProductId)
             })
-            .ToListAsync();
-
+            .ToListAsync(); 
+        
+        // TODO: this validation could be done only at checkoout
         lines.ForEach(l =>
         {
             l.Product
-                .EnsureExists(l.CartLine.ProductId)
+                .EnsureIsNotNull(l.CartLine.ProductId)
                 .EnsureStockIsAvailable(l.CartLine.Quantity);
         });
 

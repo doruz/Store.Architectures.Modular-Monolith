@@ -15,9 +15,26 @@ public sealed class CustomersOrdersController(IMediator mediator) : BaseApiContr
     /// <summary>
     /// Find details of a specific order made by the authenticated customer.
     /// </summary>
-    [HttpGet("{orderId}", Name = "OrderDetails")]
+    [HttpGet("{orderId}")]
     [ProducesResponseType<FindCustomerOrderQueryResult>(StatusCodes.Status200OK)]
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindOrderDetails([FromRoute] FindCustomerOrderQuery query)
         => await HandleQuery(query);
+
+    // TODO: add integration tests
+    /// <summary>
+    /// Create new order for the authenticated customer.
+    /// </summary>
+    [HttpPost]
+
+    [ProducesResponseType<IdModel>(StatusCodes.Status201Created)]
+    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
+
+    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+    {
+        IdModel newOrder = await Handle(command);
+
+        return CreatedAtRoute(nameof(FindOrderDetails), new { OrderId = newOrder.Id }, newOrder);
+    }
 }

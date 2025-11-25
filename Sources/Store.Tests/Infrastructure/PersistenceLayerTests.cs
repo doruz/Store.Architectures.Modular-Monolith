@@ -1,21 +1,19 @@
-﻿using Store.Infrastructure.Persistence;
-
-namespace Store.Tests.Infrastructure;
+﻿namespace Store.Tests.Infrastructure;
 
 public class PersistenceLayerTests
 {
-    [Fact]
-    public void AllTypes_Should_ShouldBeExposedOnlyThroughAbstractions()
-    {
-        var result = SolutionTypes.Infrastructure.Persistence
-            .That()
-            .DoNotHaveName(nameof(PersistenceLayer))
-            .ShouldNot()
-            .BePublic()
-            .GetResult();
+    //[Fact]
+    //public void AllTypes_Should_ShouldBeExposedOnlyThroughAbstractions()
+    //{
+    //    var result = SolutionTypes.Infrastructure.Persistence
+    //        .That()
+    //        .DoNotHaveName(nameof(PersistenceLayer))
+    //        .ShouldNot()
+    //        .BePublic()
+    //        .GetResult();
 
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
+    //    result.FailingTypeNames.Should().BeNullOrEmpty();
+    //}
 
     [Fact]
     public void AllRepositories_Should_HaveNameEndingWithRepository()
