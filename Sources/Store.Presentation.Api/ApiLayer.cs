@@ -49,7 +49,6 @@ public static class ApiLayer
     {
         var assemblies = new[]
         {
-            BusinessLayer.Assembly,
             ProductsBusinessLayer.Assembly,
             ShoppingCartsBusinessLayer.Assembly,
             OrdersBusinessLayer.Assembly
