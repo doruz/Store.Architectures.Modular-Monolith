@@ -22,8 +22,6 @@ public sealed class InMemoryOrdersRepository : IOrdersRepository
         EnsureArg.IsNotNullOrEmpty(customerId, nameof(customerId));
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));
 
-        throw new Exception("");
-
         var customerOrder = _orders
             .FirstOrDefault(order => order.CustomerId.IsEqualTo(customerId) && order.Id.IsEqualTo(id));
 

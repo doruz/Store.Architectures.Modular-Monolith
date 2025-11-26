@@ -3,7 +3,6 @@ using Store.Shared;
 
 namespace Store.Orders.Domain;
 
-// TODO: maybe to create a OrderLineProduct record
 public sealed record OrderLine
 {
     public string ProductId { get; }

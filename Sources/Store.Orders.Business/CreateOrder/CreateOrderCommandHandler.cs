@@ -1,26 +1,24 @@
 ﻿using EnsureThat;
+using Store.Orders.Contracts;
 using Store.Orders.Domain;
 using Store.Products.Contracts;
 
 namespace Store.Orders.Business;
 
-internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurrentCustomer currentCustomer, ISender mediator)
+internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurrentCustomer currentCustomer, IMediator mediator)
     : IRequestHandler<CreateOrderCommand, IdModel>
 {
     public async Task<IdModel> Handle(CreateOrderCommand request, CancellationToken _)
     {
+        request.EnsureIsNotEmpty();
+
         var customerOrder = new Order
-            (
-                currentCustomer.Id,
-                await GetOrderLines(request.ValidLines)
-            )
-            .EnsureIsNotEmpty();
+        (
+            currentCustomer.Id,
+            await GetOrderLines(request.ValidLines)
+        );
 
-
-
-        await orders.SaveOrderAsync(customerOrder);
-
-        // TODO: update stock & clear cart
+        await SaveOrder(customerOrder);
 
         return new IdModel(customerOrder.Id);
     }
@@ -43,7 +41,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
         var product = await mediator.Send(new FindProductRequest(id));
 
         return product
-            .EnsureIsNotNull(id)
+            .EnsureExists(id)
             .EnsureStockIsAvailable(expectedQuantity);
     }
 
@@ -62,13 +60,9 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
         );
     }
 
-    //    // TODO: when order is saved it should update products stocks
-    //    //private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, FindProductResponse Product)> items)
-    //    //{
-    //    //    foreach (var item in items)
-    //    //    {
-    //    //        item.Product.DecreaseStock(item.CartLine.Quantity);
-    //    //        await repositories.Products.UpdateAsync(item.Product);
-    //    //    }
-    //    //}
+    private async Task SaveOrder(Order order)
+    {
+        await orders.SaveOrderAsync(order);
+        await mediator.Publish(new OrderCreatedEvent(order.CustomerId, order.Id));
+    }
 }

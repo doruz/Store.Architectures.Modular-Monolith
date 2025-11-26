@@ -31,10 +31,10 @@ public sealed class CustomersOrdersController(IMediator mediator) : BaseApiContr
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
 
-    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderLineModel[] lines)
     {
-        IdModel newOrder = await Handle(command);
+        IdModel newOrder = await Handle(new CreateOrderCommand(lines));
 
-        return CreatedAtRoute(nameof(FindOrderDetails), new { OrderId = newOrder.Id }, newOrder);
+        return CreatedAtAction(nameof(FindOrderDetails), new { OrderId = newOrder.Id }, newOrder);
     }
 }

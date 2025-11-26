@@ -30,6 +30,6 @@ internal sealed class CosmosOrdersRepository(CosmosOrdersDatabase db) : IOrdersR
     {
         EnsureArg.IsNotNull(order, nameof(order));
 
-        await db.Orders.UpsertItemAsync(order);
+        await db.Orders.CreateItemAsync(order);
     }
 }

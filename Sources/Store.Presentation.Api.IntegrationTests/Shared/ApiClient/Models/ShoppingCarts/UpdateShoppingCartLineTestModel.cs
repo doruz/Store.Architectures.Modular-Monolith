@@ -1,5 +1,7 @@
 ﻿namespace Store.Presentation.Api.IntegrationTests;
 
+
+// TODO: to rename to 
 public record UpdateShoppingCartLineTestModel(string ProductId, int Quantity);
 
 

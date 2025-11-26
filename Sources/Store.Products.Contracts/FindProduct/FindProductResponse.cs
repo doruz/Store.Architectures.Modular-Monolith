@@ -17,9 +17,18 @@ public sealed record FindProductResponse
     internal bool StockIsAvailable(int quantity) => quantity.IsInRange(0, Stock);
 }
 
-// TODO: this maybe should be moved in ShoppingCart
 public static class FindProductErrors
 {
+    public static FindProductResponse EnsureExists(this FindProductResponse? product, string productId)
+    {
+        if (product is null)
+        {
+            throw AppError.NotFound("product_not_found", productId);
+        }
+
+        return product;
+    }
+
     public static FindProductResponse EnsureStockIsAvailable(this FindProductResponse product, int quantity) =>
         product.StockIsAvailable(quantity)
             ? product

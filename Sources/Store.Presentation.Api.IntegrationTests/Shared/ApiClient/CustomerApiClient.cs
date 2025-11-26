@@ -44,9 +44,6 @@ public sealed class CustomerShoppingCartApiClient(HttpClient client, string base
 
         return client.PatchAsJsonAsync(_route, shoppingCart.Lines);
     }
-
-    public Task<HttpResponseMessage> CheckoutAsync()
-        => client.PostAsJsonAsync($"{_route}/checkout", new { });
 }
 
 
@@ -56,6 +53,15 @@ public sealed class CustomerOrdersApiClient(HttpClient client, string baseRoute)
 
     public Task<HttpResponseMessage> GetAllAsync()
         => client.GetAsync(_route);
+
+    public Task<HttpResponseMessage> CreateAsync(Action<UpdateShoppingCartTestModel> shoppingCartActions)
+    {
+        var shoppingCart = new UpdateShoppingCartTestModel();
+
+        shoppingCartActions(shoppingCart);
+
+        return client.PostAsJsonAsync($"{_route}", shoppingCart.Lines);
+    }
 
     public Task<HttpResponseMessage> FindAsync(string orderId)
         => client.GetAsync($"{_route}/{orderId}");

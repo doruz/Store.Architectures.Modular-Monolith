@@ -5,6 +5,14 @@ namespace Store.Orders.Business;
 public sealed record CreateOrderCommand(CreateOrderLineModel[] Lines) : IRequest<IdModel>
 {
     internal IEnumerable<CreateOrderLineModel> ValidLines => Lines.Where(line => line.Quantity > 0);
+
+    internal void EnsureIsNotEmpty()
+    {
+        if (ValidLines.IsEmpty())
+        {
+            throw AppError.BadRequest("order_cannot_be_empty");
+        }
+    }
 }
 
 public sealed record CreateOrderLineModel

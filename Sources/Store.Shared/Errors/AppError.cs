@@ -12,6 +12,8 @@ public sealed class AppError(int statusCode, string error) : Exception
         ErrorDetails = new { id }
     };
 
+    public static AppError BadRequest(string error) => new(400, error);
+
     public static AppError Conflict(string error, string id) => new(409, error)
     {
         ErrorDetails = new { id }

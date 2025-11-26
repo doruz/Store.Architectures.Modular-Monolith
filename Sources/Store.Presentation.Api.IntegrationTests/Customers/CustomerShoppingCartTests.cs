@@ -56,32 +56,6 @@ public class CustomerShoppingCartTests(ApiApplicationFactory factory) : ApiBaseT
     }
 
     [Fact]
-    public async Task When_UpdatingCartWithUnknownProduct_Should_ReturnNotFound()
-    {
-        // Act
-        var response = await Api.Customer.Cart
-            .UpdateAsync(cart => cart.With(TestProducts.UnknownId, 1));
-
-        // Assert
-        await response.Should()
-            .HaveStatusCode(HttpStatusCode.NotFound)
-            .And.ContainContentAsync(new AppErrorTestModel("product_not_found"));
-    }
-
-    [Fact]
-    public async Task When_UpdatingCartWithUnavailableStock_Should_ReturnConflict()
-    {
-        // Act
-        var response = await Api.Customer.Cart
-            .UpdateAsync(cart => cart.Apples(TestProducts.Apples.Stock + 1));
-
-        // Assert
-        await response.Should()
-            .HaveStatusCode(HttpStatusCode.Conflict)
-            .And.ContainContentAsync(new AppErrorTestModel("product_stock_not_available"));
-    }
-
-    [Fact]
     public async Task When_UpdatingCartWithDifferentProductsInSameRequest_Should_AllBeAdded()
     {
         // Arrange
@@ -169,63 +143,16 @@ public class CustomerShoppingCartTests(ApiApplicationFactory factory) : ApiBaseT
     }
 
     [Fact]
-    public async Task When_EmptyCartIsCheckout_Should_ReturnError()
+    public async Task When_OrderIsCreated_Should_ClearCurrentCart()
     {
         // Arrange
-        await ClearCart();
-
-        // Act
-        var response = await Api.Customer.Cart.CheckoutAsync();
-
-        // Assert
-        await response.Should()
-            .HaveStatusCode(HttpStatusCode.NotFound)
-            .And.ContainContentAsync(new AppErrorTestModel("shopping_cart_is_empty"));
-    }
-
-    [Fact]
-    public async Task When_NonEmptyCartIsCheckout_Should_ReturnSuccess()
-    {
-        // Arrange
-        await ClearCart();
         await UpdateCart(cart => cart.Apples(1));
 
         // Act
-        var response = await Api.Customer.Cart.CheckoutAsync();
-
-        // Assert
-        await response.Should()
-            .HaveStatusCode(HttpStatusCode.Created)
-            .And.ContainIdAsync();
-    }
-
-    [Fact]
-    public async Task When_NonEmptyCartIsCheckout_Should_ClearCurrentCart()
-    {
-        // Arrange
-        await ClearCart();
-        await UpdateCart(cart => cart.Apples(1));
-
-        // Act
-        await Api.Customer.Cart.CheckoutAsync().EnsureIsSuccess();
+        await Api.Customer.Orders.CreateAsync(order => order.Apples(1));
 
         // Assert
         await CartShouldBe(EmptyCart);
-    }
-
-    [Fact]
-    public async Task When_NonEmptyCartIsCheckout_Should_DecreaseProductsStocks()
-    {
-        // Arrange
-        await ClearCart();
-        await UpdateCart(cart => cart.Apples(4).Bananas(5));
-
-        // Act
-        await Api.Customer.Cart.CheckoutAsync().EnsureIsSuccess();
-
-        // Assert
-        await ProductShouldHaveStock(TestProducts.Apples.Id, 1);
-        await ProductShouldHaveStock(TestProducts.Bananas.Id, 5);
     }
 
     private Task ClearCart() =>
@@ -245,15 +172,5 @@ public class CustomerShoppingCartTests(ApiApplicationFactory factory) : ApiBaseT
         await response.Should()
             .HaveStatusCode(HttpStatusCode.OK)
             .And.ContainContentAsync(expectedCart);
-    }
-
-    private async Task ProductShouldHaveStock(string id, int expectedStock)
-    {
-        var product = await Api.Customer.Products
-            .FindAsync(id)
-            .EnsureIsSuccess()
-            .ContentAsAsync<ReadProductTestModel>();
-
-        product.Stock.Should().Be(expectedStock);
     }
 }

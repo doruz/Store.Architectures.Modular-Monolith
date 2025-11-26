@@ -27,8 +27,8 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
 
         var orders = new []
         {
-            await SaveNewOrder(cart => cart.Apples(1).Bananas(2)),
-            await SaveNewOrder(cart => cart.Apples(3).Bananas(1))
+            await CreateOrder(cart => cart.Apples(1).Bananas(2)),
+            await CreateOrder(cart => cart.Apples(3).Bananas(1))
         };
 
         var expectedOrderSummaries = new []
@@ -74,7 +74,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
     public async Task When_OrderExists_Should_ReturnOrderDetails()
     {
         // Arrange
-        var order = await SaveNewOrder(cart => cart.Apples(2).Bananas(3));
+        var order = await CreateOrder(cart => cart.Apples(2).Bananas(3));
 
         var expectedOrderDetails = new OrderDetailsTestModel
         {
@@ -116,18 +116,62 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
             .And.ContainContentAsync(expectedOrderDetails);
     }
 
-    private async Task<NewOrderTestModel> SaveNewOrder(Action<UpdateShoppingCartTestModel> shoppingCartActions)
+    [Fact]
+    public async Task When_EmptyOrderIsCreated_Should_ReturnError()
     {
-        await Api.Customer.Cart
-            .ClearAsync()
-            .EnsureIsSuccess();
+        // Act
+        var response = await Api.Customer.Orders.CreateAsync(_ => { });
 
-        await Api.Customer.Cart
-            .UpdateAsync(shoppingCartActions)
-            .EnsureIsSuccess();
+        // Assert
+        await response.Should()
+            .HaveStatusCode(HttpStatusCode.BadRequest)
+            .And.ContainContentAsync(new AppErrorTestModel("order_cannot_be_empty"));
+    }
 
-        var newOrder = await Api.Customer.Cart
-            .CheckoutAsync()
+    [Fact]
+    public async Task When_CreatingOrderWithUnknownProduct_Should_ReturnNotFound()
+    {
+        // Act
+        var response = await Api.Customer.Orders
+            .CreateAsync(cart => cart.With(TestProducts.UnknownId, 1));
+
+        // Assert
+        await response.Should()
+            .HaveStatusCode(HttpStatusCode.NotFound)
+            .And.ContainContentAsync(new AppErrorTestModel("product_not_found"));
+    }
+
+    [Fact]
+    public async Task When_CreatingOrderWithUnavailableStock_Should_ReturnConflict()
+    {
+        // Act
+        var response = await Api.Customer.Orders
+            .CreateAsync(cart => cart.Apples(TestProducts.Apples.Stock + 1));
+
+        var text = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        await response.Should()
+            .HaveStatusCode(HttpStatusCode.Conflict)
+            .And.ContainContentAsync(new AppErrorTestModel("product_stock_not_available"));
+    }
+
+    [Fact]
+    public async Task When_CreatingOrder_Should_DecreaseProductsStocks()
+    {
+        // Arrange & Act
+        await Api.Customer.Orders.CreateAsync(cart => cart.Apples(4).Bananas(5));
+
+        // Assert
+        await ProductShouldHaveStock(TestProducts.Apples.Id, 1);
+        await ProductShouldHaveStock(TestProducts.Bananas.Id, 5);
+    }
+
+
+    private async Task<NewOrderTestModel> CreateOrder(Action<UpdateShoppingCartTestModel> orderActions)
+    {
+        var newOrder = await Api.Customer.Orders
+            .CreateAsync(orderActions)
             .EnsureIsSuccess()
             .ContentAsAsync<IdModel>();
 
@@ -138,5 +182,15 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
             Id = newOrder.Id,
             OrderedAt = new DateTimeTestModel(savedOrder!.CreatedAt)
         };
+    }
+
+    private async Task ProductShouldHaveStock(string id, int expectedStock)
+    {
+        var product = await Api.Customer.Products
+            .FindAsync(id)
+            .EnsureIsSuccess()
+            .ContentAsAsync<ReadProductTestModel>();
+
+        product.Stock.Should().Be(expectedStock);
     }
 }
