@@ -143,6 +143,24 @@ public class CustomerShoppingCartTests(ApiApplicationFactory factory) : ApiBaseT
     }
 
     [Fact]
+    public async Task When_ProductIsNoLongerAvailable_ShouldBeExcludedFromCart()
+    {
+        // Arrange
+        await ClearCart();
+
+        // Act
+        await UpdateCart(cart => cart.Apples(1));
+
+        await Api.Admin
+            .DeleteProductAsync(TestProducts.Apples.Id)
+            .EnsureIsSuccess();
+
+        // Assert
+        await CartShouldBe(EmptyCart);
+    }
+
+
+    [Fact]
     public async Task When_OrderIsCreated_Should_ClearCurrentCart()
     {
         // Arrange

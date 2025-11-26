@@ -39,9 +39,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
     {
         var product = await mediator.Send(new FindProductRequest(id));
 
-        return product
-            .EnsureExists(id)
-            .EnsureStockIsAvailable(expectedQuantity);
+        return product.EnsureStockIsAvailable(expectedQuantity);
     }
 
     private static OrderLine CreateOrderLine(CreateOrderLineModel orderLine, ProductModel product)

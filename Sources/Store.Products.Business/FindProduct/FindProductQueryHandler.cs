@@ -6,20 +6,17 @@ namespace Store.Core.Business.Products;
 
 internal sealed class FindProductQueryHandler(IProductsRepository products) :
     IRequestHandler<FindProductQuery, ProductModel>,
-    IRequestHandler<FindProductRequest, ProductModel?>
+    IRequestHandler<FindProductRequest, ProductModel>
 {
-    public async Task<ProductModel> Handle(FindProductQuery query, CancellationToken _) =>
-        await products
-            .FindAsync(query.Id)
-            .EnsureExists(query.Id)
+    public Task<ProductModel> Handle(FindProductQuery query, CancellationToken _)
+        => FindProduct(query.Id);
+
+    public Task<ProductModel> Handle(FindProductRequest request, CancellationToken _)
+        => FindProduct(request.Id);
+
+    private Task<ProductModel> FindProduct(string id) =>
+        products
+            .FindAsync(id)
+            .EnsureExists(id)
             .MapAsync(ProductModelFactory.Create);
-
-    public async Task<ProductModel?> Handle(FindProductRequest request, CancellationToken _)
-    {
-        var product = await products.FindAsync(request.Id);
-
-        return product.DoesNotExists() 
-            ? null
-            : product?.Map(ProductModelFactory.Create);
-    }
 }

@@ -153,7 +153,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
         // Assert
         await response.Should()
             .HaveStatusCode(HttpStatusCode.Conflict)
-            .And.ContainContentAsync(new AppErrorTestModel("product_stock_not_available"));
+            .And.ContainContentAsync(new AppErrorTestModel("product_stock_is_not_available"));
     }
 
     [Fact]

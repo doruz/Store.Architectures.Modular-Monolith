@@ -71,18 +71,19 @@ public class ProductTests
         _systemUnderTest.Stock.Should().Be(expectedStock);
     }
 
-    [Theory]
-    [InlineData(0, true)]
-    [InlineData(2, true)]
-    [InlineData(5, true)]
-    [InlineData(10, true)]
-    [InlineData(11, false)]
-    public void When_StockIsChecked_Should_ReturnCorrectValue(int quantity, bool expectedStockAvailability)
-    {
-        // Act
-        var result = _systemUnderTest.StockIsAvailable(quantity);
+    // TODO: to be moved for contracts
+    //[Theory]
+    //[InlineData(0, true)]
+    //[InlineData(2, true)]
+    //[InlineData(5, true)]
+    //[InlineData(10, true)]
+    //[InlineData(11, false)]
+    //public void When_StockIsChecked_Should_ReturnCorrectValue(int quantity, bool expectedStockAvailability)
+    //{
+    //    // Act
+    //    var result = _systemUnderTest.StockIsAvailable(quantity);
 
-        // Assert
-        result.Should().Be(expectedStockAvailability);
-    }
+    //    // Assert
+    //    result.Should().Be(expectedStockAvailability);
+    //}
 }

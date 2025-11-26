@@ -18,7 +18,5 @@ public sealed class Product(string name, Price price, int stock) : Entity
         Stock = stock ?? Stock;
     }
 
-    public bool StockIsAvailable(int quantity) => quantity.IsInRange(0, Stock);
-
     public void DecreaseStock(int quantity) => Stock -= quantity;
 }

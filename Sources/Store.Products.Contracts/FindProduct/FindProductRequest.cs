@@ -2,5 +2,5 @@
 
 namespace Store.Products.Contracts
 {
-    public sealed record FindProductRequest(string Id) : IRequest<ProductModel?>;
+    public sealed record FindProductRequest(string Id) : IRequest<ProductModel>;
 }
