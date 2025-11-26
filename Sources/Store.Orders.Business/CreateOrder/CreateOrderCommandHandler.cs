@@ -35,7 +35,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
         return orderDetails.Select(x => CreateOrderLine(x.OrderLine, x.Product));
     }
 
-    public async Task<FindProductResponse> FindValidProduct(string id, int expectedQuantity)
+    public async Task<ProductModel> FindValidProduct(string id, int expectedQuantity)
     {
         var product = await mediator.Send(new FindProductRequest(id));
 
@@ -44,7 +44,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
             .EnsureStockIsAvailable(expectedQuantity);
     }
 
-    private static OrderLine CreateOrderLine(CreateOrderLineModel orderLine, FindProductResponse product)
+    private static OrderLine CreateOrderLine(CreateOrderLineModel orderLine, ProductModel product)
     {
         EnsureArg.IsTrue(orderLine.ProductId.IsEqualTo(product.Id));
         EnsureArg.IsInRange(orderLine.Quantity, 0, product.Stock);

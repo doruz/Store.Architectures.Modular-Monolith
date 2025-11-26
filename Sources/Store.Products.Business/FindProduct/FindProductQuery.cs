@@ -1,3 +1,5 @@
-﻿namespace Store.Core.Business.Products;
+﻿using Store.Products.Contracts;
 
-public sealed record FindProductQuery(string Id) : IRequest<GetProductModel>;
+namespace Store.Core.Business.Products;
+
+public sealed record FindProductQuery(string Id) : IRequest<ProductModel>;

@@ -26,10 +26,10 @@ internal sealed class GetCustomerCartQueryHandler(IShoppingCartsRepository shopp
         return new GetCustomerCartQueryResult(lines);
     }
 
-    private Task<FindProductResponse?> FindProduct(string id)
+    private Task<ProductModel?> FindProduct(string id)
         => mediator.Send(new FindProductRequest(id));
 
-    private static GetCustomerCartLineModel ToShoppingCartLineModel(ShoppingCartLine cartLine, FindProductResponse product)
+    private static GetCustomerCartLineModel ToShoppingCartLineModel(ShoppingCartLine cartLine, ProductModel product)
     {
         EnsureArg.IsNotNull(cartLine, nameof(cartLine));
         EnsureArg.IsNotNull(product, nameof(product));

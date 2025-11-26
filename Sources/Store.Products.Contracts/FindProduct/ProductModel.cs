@@ -2,8 +2,7 @@
 
 namespace Store.Products.Contracts;
 
-// TODO: maybe to rename it to ProductModel
-public sealed record FindProductResponse
+public sealed record ProductModel
 {
     public required string Id { get; init; }
 
@@ -19,7 +18,7 @@ public sealed record FindProductResponse
 
 public static class FindProductErrors
 {
-    public static FindProductResponse EnsureExists(this FindProductResponse? product, string productId)
+    public static ProductModel EnsureExists(this ProductModel? product, string productId)
     {
         if (product is null)
         {
@@ -29,7 +28,7 @@ public static class FindProductErrors
         return product;
     }
 
-    public static FindProductResponse EnsureStockIsAvailable(this FindProductResponse product, int quantity) =>
+    public static ProductModel EnsureStockIsAvailable(this ProductModel product, int quantity) =>
         product.StockIsAvailable(quantity)
             ? product
             : throw AppError.Conflict("product_stock_not_available", product.Id);

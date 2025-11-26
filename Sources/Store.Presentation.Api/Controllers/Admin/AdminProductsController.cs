@@ -1,4 +1,5 @@
 ﻿using Store.Core.Business.Products;
+using Store.Products.Contracts;
 using Store.Shared;
 
 [ApiRoute("admins/products")]
@@ -8,7 +9,7 @@ public sealed class AdminProductsController(IMediator mediator) : BaseApiControl
     /// Get details of all existing products.
     /// </summary>
     [HttpGet]
-    [ProducesResponseType<IEnumerable<GetProductModel>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<IEnumerable<ProductModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllProducts() 
         => await HandleQuery(GetProductsQuery.All());
 
@@ -16,7 +17,7 @@ public sealed class AdminProductsController(IMediator mediator) : BaseApiControl
     /// Find details of a specific product.
     /// </summary>
     [HttpGet("{id}")]
-    [ProducesResponseType<GetProductModel>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ProductModel>(StatusCodes.Status200OK)]
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindProduct([FromRoute] FindProductQuery query) 
         => await HandleQuery(query);
