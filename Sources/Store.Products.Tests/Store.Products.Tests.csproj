@@ -16,11 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Store.Core.Domain\Store.Core.Domain.csproj" />
+    <ProjectReference Include="..\Store.Products.Contracts\Store.Products.Contracts.csproj" />
+    <ProjectReference Include="..\Store.Products.Domain\Store.Products.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Using Include="Xunit" />
-  </ItemGroup>
+	<ItemGroup>
+		<Using Include="Xunit" />
+		<Using Include="FluentAssertions" />
+	</ItemGroup>
 
 </Project>

@@ -1,18 +1,17 @@
-﻿using FluentAssertions;
-using Store.Orders.Contracts;
+﻿using Store.Orders.Contracts;
 using Store.Orders.Domain;
 using Store.Shared;
 
-namespace Store.Core.Domain.Tests.Entities;
+namespace Store.Orders.Tests.Domain;
 
 public class OrderTests
 {
     private static readonly string CustomerId = Guid.NewGuid().ToString();
 
-    private static readonly OrderLine[] OrderLines = 
+    private static readonly OrderLine[] OrderLines =
     [
-        new OrderLine(Products.First.Id, Products.First.Name, Products.First.Price, 4),
-        new OrderLine(Products.Second.Id, Products.Second.Name, Products.Second.Price, 3),
+        new OrderLine(OrderProducts.First.Id, OrderProducts.First.Name, OrderProducts.First.Price.Value, 4),
+        new OrderLine(OrderProducts.Second.Id, OrderProducts.Second.Name, OrderProducts.Second.Price.Value, 3),
     ];
 
     [Fact]
@@ -80,8 +79,8 @@ public class OrderTests
         {
             Products =
             [
-                new NewOrderEvent.Product(Products.First.Id, 4),
-                new NewOrderEvent.Product(Products.Second.Id, 3)
+                new NewOrderEvent.Product(OrderProducts.First.Id, 4),
+                new NewOrderEvent.Product(OrderProducts.Second.Id, 3)
             ]
         });
     }

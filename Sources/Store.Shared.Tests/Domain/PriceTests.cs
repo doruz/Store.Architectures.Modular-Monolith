@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using Store.Shared;
-
-namespace Store.Core.Domain.Tests.Entities.Values;
+﻿namespace Store.Shared.Tests.Domain;
 
 public class PriceTests
 {

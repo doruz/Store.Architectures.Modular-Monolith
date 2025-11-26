@@ -1,14 +1,12 @@
-﻿using FluentAssertions;
-using Store.Orders.Domain;
-using Store.Products.Domain;
+﻿using Store.Orders.Domain;
+using Store.Products.Contracts;
 using Store.Shared;
-using Store.ShoppingCarts.Domain;
 
-namespace Store.Core.Domain.Tests.Entities;
+namespace Store.Orders.Tests.Domain;
 
 public class OrderLineTests
 {
-    private static readonly Product Product = Products.Second;
+    private static readonly ProductModel Product = OrderProducts.Second;
 
     [Fact]
     public void When_OrderLineIsCreated_Should_ThrowExceptionWhenQuantityIsNegative()
@@ -16,7 +14,7 @@ public class OrderLineTests
         // Arrange & Act
         var action = () =>
         {
-            new OrderLine(Product.Id, Product.Name, Product.Price, -1);
+            new OrderLine(Product.Id, Product.Name, Product.Price.Value, -1);
         };
 
         // Assert
@@ -27,7 +25,7 @@ public class OrderLineTests
     public void When_OrderLineIsCreated_Should_ContainAllDetails()
     {
         // Arrange & Act
-        var systemUnderTest = new OrderLine(Product.Id, Product.Name, Product.Price, 3);
+        var systemUnderTest = new OrderLine(Product.Id, Product.Name, Product.Price.Value, 3);
 
         // Assert
         systemUnderTest.ProductId.Should().Be(Product.Id);
@@ -39,7 +37,7 @@ public class OrderLineTests
     public void When_OrderLineIsCreated_Should_ContainCorrectTotalPrice()
     {
         // Arrange & Act
-        var systemUnderTest = new OrderLine(Product.Id, Product.Name, Product.Price, 3);
+        var systemUnderTest = new OrderLine(Product.Id, Product.Name, Product.Price.Value, 3);
 
         // Assert
         systemUnderTest.TotalPrice.Should().Be(new Price(2.97m));

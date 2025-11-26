@@ -1,7 +1,6 @@
-﻿using FluentAssertions;
-using Store.ShoppingCarts.Domain;
+﻿using Store.ShoppingCarts.Domain;
 
-namespace Store.Core.Domain.Tests.Entities;
+namespace Store.ShoppingCarts.Tests.Domain;
 
 public class ShoppingCartLineTests
 {
