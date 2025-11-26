@@ -10,10 +10,9 @@
 		<InternalsVisibleTo Include="Store.Presentation.Api.IntegrationTests" />
 	</ItemGroup>
 
-	<ItemGroup>
-    <ProjectReference Include="..\Store.Orders.Domain\Store.Orders.Domain.csproj" />
-    <ProjectReference Include="..\Store.Shared.Infrastructure\Store.Shared.Infrastructure.csproj" />
-    <ProjectReference Include="..\Store.Shared\Store.Shared.csproj" />
+  <ItemGroup>
+    <ProjectReference Include="..\Store.Products.Domain\Store.Products.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\Store.Shared.Infrastructure\Store.Shared.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,9 +11,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Store.Orders.Contracts\Store.Orders.Contracts.csproj" />
+	  <ProjectReference Include="..\..\Orders\Store.Orders.Contracts\Store.Orders.Contracts.csproj" />
 	  <ProjectReference Include="..\Store.Products.Contracts\Store.Products.Contracts.csproj" />
-	  <ProjectReference Include="..\Store.ShoppingCarts.Domain\Store.ShoppingCarts.Domain.csproj" />
+	  <ProjectReference Include="..\Store.Products.Domain\Store.Products.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
