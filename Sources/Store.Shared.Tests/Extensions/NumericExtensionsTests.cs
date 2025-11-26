@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using Store.Shared;
-
-namespace Store.Core.Shared.Tests.Extensions;
+﻿namespace Store.Shared.Tests.Extensions;
 
 public class NumericExtensionsTests
 {
