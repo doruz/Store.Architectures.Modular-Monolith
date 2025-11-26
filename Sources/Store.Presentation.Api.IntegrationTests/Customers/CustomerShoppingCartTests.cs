@@ -160,7 +160,7 @@ public class CustomerShoppingCartTests(ApiApplicationFactory factory) : ApiBaseT
             .ClearAsync()
             .EnsureIsSuccess();
 
-    private Task UpdateCart(Action<UpdateShoppingCartTestModel> shoppingCartActions) =>
+    private Task UpdateCart(Action<NewOrderTestModel> shoppingCartActions) =>
         Api.Customer.Cart
             .UpdateAsync(shoppingCartActions)
             .EnsureIsSuccess();

@@ -1,8 +1,20 @@
 ﻿namespace Store.Presentation.Api.IntegrationTests;
 
-public record NewOrderTestModel
+public sealed class NewOrderTestModel
 {
-    public required string Id { get; init; }
+    public List<NewOrderLineTestModel> Lines { get; } = [];
 
-    public required DateTimeTestModel OrderedAt { get; init; }
+    public NewOrderTestModel Apples(int quantity)
+        => With(TestProducts.Apples.Id, quantity);
+
+    public NewOrderTestModel Bananas(int quantity)
+        => With(TestProducts.Bananas.Id, quantity);
+
+    public NewOrderTestModel With(string productId, int quantity)
+    {
+        Lines.Add(new NewOrderLineTestModel(productId, quantity));
+        return this;
+    }
 }
+
+public record NewOrderLineTestModel(string ProductId, int Quantity);

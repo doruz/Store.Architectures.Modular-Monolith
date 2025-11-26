@@ -168,7 +168,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
     }
 
 
-    private async Task<NewOrderTestModel> CreateOrder(Action<UpdateShoppingCartTestModel> orderActions)
+    private async Task<(string Id, DateTimeTestModel OrderedAt)> CreateOrder(Action<NewOrderTestModel> orderActions)
     {
         var newOrder = await Api.Customer.Orders
             .CreateAsync(orderActions)
@@ -177,11 +177,11 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
 
         var savedOrder = await Database.FindCustomerOrder(CurrentCustomer.Id, newOrder.Id);
 
-        return new NewOrderTestModel
-        {
-            Id = newOrder.Id,
-            OrderedAt = new DateTimeTestModel(savedOrder!.CreatedAt)
-        };
+        return
+        (
+            newOrder.Id,
+            new DateTimeTestModel(savedOrder!.CreatedAt)
+        );
     }
 
     private async Task ProductShouldHaveStock(string id, int expectedStock)

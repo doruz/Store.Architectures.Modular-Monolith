@@ -36,9 +36,9 @@ public sealed class CustomerShoppingCartApiClient(HttpClient client, string base
     public Task<HttpResponseMessage> ClearAsync()
         => client.DeleteAsync(_route);
 
-    public Task<HttpResponseMessage> UpdateAsync(Action<UpdateShoppingCartTestModel> shoppingCartActions)
+    public Task<HttpResponseMessage> UpdateAsync(Action<NewOrderTestModel> shoppingCartActions)
     {
-        var shoppingCart = new UpdateShoppingCartTestModel();
+        var shoppingCart = new NewOrderTestModel();
 
         shoppingCartActions(shoppingCart);
 
@@ -54,11 +54,11 @@ public sealed class CustomerOrdersApiClient(HttpClient client, string baseRoute)
     public Task<HttpResponseMessage> GetAllAsync()
         => client.GetAsync(_route);
 
-    public Task<HttpResponseMessage> CreateAsync(Action<UpdateShoppingCartTestModel> shoppingCartActions)
+    public Task<HttpResponseMessage> CreateAsync(Action<NewOrderTestModel> orderActions)
     {
-        var shoppingCart = new UpdateShoppingCartTestModel();
+        var shoppingCart = new NewOrderTestModel();
 
-        shoppingCartActions(shoppingCart);
+        orderActions(shoppingCart);
 
         return client.PostAsJsonAsync($"{_route}", shoppingCart.Lines);
     }
