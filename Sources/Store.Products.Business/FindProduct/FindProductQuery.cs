@@ -1,5 +1,5 @@
 ﻿using Store.Products.Contracts;
 
-namespace Store.Core.Business.Products;
+namespace Store.Products.Business;
 
 public sealed record FindProductQuery(string Id) : IRequest<ProductModel>;

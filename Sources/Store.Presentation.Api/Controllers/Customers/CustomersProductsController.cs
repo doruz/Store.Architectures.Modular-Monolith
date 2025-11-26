@@ -1,4 +1,4 @@
-﻿using Store.Core.Business.Products;
+﻿using Store.Products.Business;
 using Store.Products.Contracts;
 using Store.Shared;
 

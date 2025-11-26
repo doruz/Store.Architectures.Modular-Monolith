@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EnsureThat;
 
-namespace Store.Core.Business.Products;
+namespace Store.Products.Business;
 
 public sealed record UpdateProductCommand : IRequest
 {

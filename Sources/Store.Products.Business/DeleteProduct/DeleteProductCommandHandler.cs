@@ -1,6 +1,6 @@
 ﻿using Store.Products.Domain;
 
-namespace Store.Core.Business.Products;
+namespace Store.Products.Business;
 
 internal sealed class DeleteProductCommandHandler(IProductsRepository products)
     : IRequestHandler<DeleteProductCommand>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Store.Core.Business.Products;
+namespace Store.Products.Business;
 
 public record AddProductCommand : IRequest<IdModel>
 {

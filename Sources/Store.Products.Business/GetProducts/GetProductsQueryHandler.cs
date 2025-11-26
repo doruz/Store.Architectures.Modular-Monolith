@@ -2,7 +2,7 @@
 using Store.Products.Contracts;
 using Store.Products.Domain;
 
-namespace Store.Core.Business.Products;
+namespace Store.Products.Business;
 
 internal sealed class GetProductsQueryHandler(IProductsRepository products)
     : IRequestHandler<GetProductsQuery, IEnumerable<ProductModel>>

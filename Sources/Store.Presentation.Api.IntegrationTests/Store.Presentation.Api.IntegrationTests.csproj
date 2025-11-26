@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Store.Infrastructure.Persistence\Store.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\Store.Presentation.Api\Store.Presentation.Api.csproj" />
   </ItemGroup>
 

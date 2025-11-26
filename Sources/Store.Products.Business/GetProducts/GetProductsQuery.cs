@@ -1,7 +1,7 @@
 ﻿using Store.Products.Contracts;
 using Store.Products.Domain;
 
-namespace Store.Core.Business.Products;
+namespace Store.Products.Business;
 
 public sealed record GetProductsQuery : IRequest<IEnumerable<ProductModel>>
 {
