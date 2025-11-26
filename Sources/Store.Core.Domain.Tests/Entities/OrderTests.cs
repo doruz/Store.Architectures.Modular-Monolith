@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Store.Orders.Contracts;
 using Store.Orders.Domain;
 using Store.Shared;
 
@@ -63,5 +64,25 @@ public class OrderTests
 
         // Assert
         systemUnderTest.TotalPrice.Should().Be(new Price(4.97m));
+    }
+
+    [Fact]
+    public void When_OrderIsCreated_Should_CreateCorrectNewOrderEvent()
+    {
+        // Arrange
+        var systemUnderTest = new Order(CustomerId, OrderLines);
+
+        // Act
+        var result = systemUnderTest.NewOrderEvent();
+
+        // Assert
+        result.Should().BeEquivalentTo(new NewOrderEvent(CustomerId, systemUnderTest.Id)
+        {
+            Products =
+            [
+                new NewOrderEvent.Product(Products.First.Id, 4),
+                new NewOrderEvent.Product(Products.Second.Id, 3)
+            ]
+        });
     }
 }

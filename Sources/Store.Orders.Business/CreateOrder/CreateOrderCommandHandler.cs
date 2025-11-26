@@ -1,5 +1,4 @@
 ﻿using EnsureThat;
-using Store.Orders.Contracts;
 using Store.Orders.Domain;
 using Store.Products.Contracts;
 
@@ -63,6 +62,6 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
     private async Task SaveOrder(Order order)
     {
         await orders.SaveOrderAsync(order);
-        await mediator.Publish(new OrderCreatedEvent(order.CustomerId, order.Id));
+        await mediator.Publish(order.NewOrderEvent());
     }
 }

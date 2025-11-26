@@ -5,11 +5,11 @@ namespace Store.ShoppingCarts.Business;
 
 internal sealed class ClearCustomerCartCommandHandler(IShoppingCartsRepository shoppingCarts, ICurrentCustomer currentCustomer) :
     IRequestHandler<ClearCustomerCartCommand>,
-    INotificationHandler<OrderCreatedEvent>
+    INotificationHandler<NewOrderEvent>
 {
     public Task Handle(ClearCustomerCartCommand request, CancellationToken _) 
         => shoppingCarts.DeleteAsync(currentCustomer.Id);
 
-    public Task Handle(OrderCreatedEvent request, CancellationToken _)
+    public Task Handle(NewOrderEvent request, CancellationToken _)
         => shoppingCarts.DeleteAsync(request.CustomerId);
 }
