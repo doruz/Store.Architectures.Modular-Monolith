@@ -21,46 +21,46 @@ public class CqrsPatternTests
 
             .For(SolutionTypes.All)
 
-            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequest), Command)
-            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequestHandler<>), CommandHandler)
+            .ThatImplementInterfaceShouldHaveNameEndingWith(typeof(IRequest), Command)
+            .ThatImplementInterfaceShouldHaveNameEndingWith(typeof(IRequestHandler<>), CommandHandler)
 
-            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequest<>), Command, Query)
-            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequestHandler<,>), CommandHandler, QueryHandler)
+            .ThatImplementInterfaceShouldHaveNameEndingWith(typeof(IRequest<>), Command, Query)
+            .ThatImplementInterfaceShouldHaveNameEndingWith(typeof(IRequestHandler<,>), CommandHandler, QueryHandler)
 
-            .TypesImplementingInterfaceHaveNameEndingWith(typeof(INotification), Event)
-            .TypesImplementingInterfaceHaveNameEndingWith(typeof(INotificationHandler<>), EventHandler);
+            .ThatImplementInterfaceShouldHaveNameEndingWith(typeof(INotification), Event)
+            .ThatImplementInterfaceShouldHaveNameEndingWith(typeof(INotificationHandler<>), EventHandler);
 
         policy.Evaluate().ShouldBeSuccessful();
     }
 
-
     [Fact]
-    public void Cqrs_Should_FollowImplementationConventions()
+    public void CqrsModels_Should_BePublicImmutableRecords()
     {
         var policy = Policy
             .Define("CQRS", "Should follow implementation conventions")
 
             .For(SolutionTypes.All)
 
-            .Add(types => types
-                    .That()
-                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>)).Or().ImplementInterface(typeof(INotification))
-                    .Or()
-                    .HaveNameMatching($"({Query}|{Command})Result$")
-                    .Should()
-                    .BePublic().And().BeRecords().And().HaveAllPropertiesWithInitOnly(),
-                "Commands & Queries",
-                $"Types that implement {typeof(IRequest).FullName} should be public immutable records"
-            )
+            .ThatImplementInterfaceShouldBePublicImmutableRecords(typeof(IRequest))
+            .ThatImplementInterfaceShouldBePublicImmutableRecords(typeof(IRequest<>))
+            .ThatImplementInterfaceShouldBePublicImmutableRecords(typeof(INotification))
+            .ThatHaveNameEndingShouldBePublicImmutableRecords("Result", "Model");
 
-            .Add(types => types
-                    .That()
-                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>)).Or().ImplementInterface(typeof(INotificationHandler<>))
-                    .Should()
-                    .NotBePublic().And().BeSealed().And().BeClasses().And().NotBeRecords(),
-                "Commands & Queries Handlers",
-                $"Types that implement {typeof(IRequestHandler<>).FullName} should be non-public sealed classes"
-            );
+        policy.Evaluate().ShouldBeSuccessful();
+    }
+
+
+    [Fact]
+    public void CqrsHandlers_Should_FollowImplementationConventions()
+    {
+        var policy = Policy
+            .Define("CQRS", "Should follow implementation conventions")
+
+            .For(SolutionTypes.All)
+
+            .ThatImplementInterfaceShouldNotBeExposed(typeof(IRequestHandler<>))
+            .ThatImplementInterfaceShouldNotBeExposed(typeof(IRequestHandler<,>))
+            .ThatImplementInterfaceShouldNotBeExposed(typeof(INotificationHandler<>));
 
         policy.Evaluate().ShouldBeSuccessful();
     }
@@ -75,25 +75,30 @@ public class CqrsPatternTests
 
             .Add(types => types
                     .That()
-                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>)).Or().ImplementInterface(typeof(INotification))
-                    .Or()
-                    .HaveNameMatching($"({Query}|{Command})Result$")
-                    .Or()
-                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>))
+                    .ImplementInterface(typeof(IRequest))
+                    .Or().ImplementInterface(typeof(IRequest<>))
+                    .Or().ImplementInterface(typeof(INotification))
+                    .Or().HaveNameMatching($"({Query}|{Command})Result$")
+                    .Or().ImplementInterface(typeof(IRequestHandler<>))
+                    .Or().ImplementInterface(typeof(IRequestHandler<,>))
+                    .Or().ImplementInterface(typeof(INotificationHandler<>))
                     .ShouldNot()
                     .HavePropertiesWithTypesFrom("Domain"),
-                "Commands & Queries",
+                "Commands & Queries & Events",
                 "Types should not expose domain types through their properties."
             )
 
             .Add(types => types
                     .That()
-                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>)).Or().ImplementInterface(typeof(INotification))
-                    .Or()
-                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>)).Or().ImplementInterface(typeof(INotificationHandler<>))
+                    .ImplementInterface(typeof(IRequest))
+                    .Or().ImplementInterface(typeof(IRequest<>))
+                    .Or().ImplementInterface(typeof(INotification))
+                    .Or().ImplementInterface(typeof(IRequestHandler<>))
+                    .Or().ImplementInterface(typeof(IRequestHandler<,>))
+                    .Or().ImplementInterface(typeof(INotificationHandler<>))
                     .ShouldNot()
                     .UseTypesOnPublicMethodsFrom("Domain"),
-                "Commands & Queries",
+                "Commands & Queries & Events",
                 "Types should not expose domain types through their public methods."
             );
 

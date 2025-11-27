@@ -2,7 +2,6 @@
 
 public class OnionArchitectureTests
 {
-    [Fact]
     public void SharedLayer_Should_NotHaveDependenciesOnLayersAbove()
     {
         var result = SolutionTypes.Core.Shared
