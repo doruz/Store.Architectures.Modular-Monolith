@@ -2,6 +2,12 @@
 
 internal static class SolutionNamespaces
 {
+    private const string Modules = "(Orders|Products|ShoppingCarts)";
+
+    public const string Domain = $"Store.{Modules}.Domain";
+    public const string Business = $"Store.{Modules}.Business";
+    public const string Infrastructure = $"Store.{Modules}.Infrastructure";
+
     public static class Core
     {
         public const string All = "Store.Core";
@@ -11,7 +17,7 @@ internal static class SolutionNamespaces
         public const string Business = $"{All}.Business";
     }
 
-    public static class Infrastructure
+    public static class InfrastructureOld
     {
         public const string All = "Store.Infrastructure";
 

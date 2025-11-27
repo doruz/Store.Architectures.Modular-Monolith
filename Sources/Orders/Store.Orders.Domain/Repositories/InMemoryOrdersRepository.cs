@@ -1,7 +1,7 @@
 ﻿using EnsureThat;
 using Store.Shared;
 
-namespace Store.Orders.Domain.Repositories;
+namespace Store.Orders.Domain;
 
 public sealed class InMemoryOrdersRepository : IOrdersRepository
 {

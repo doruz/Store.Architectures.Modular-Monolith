@@ -1,7 +1,7 @@
 ﻿using EnsureThat;
 using Store.Shared;
 
-namespace Store.ShoppingCarts.Domain.Repositories;
+namespace Store.ShoppingCarts.Domain;
 
 public sealed class InMemoryShoppingCartsRepository : IShoppingCartsRepository
 {

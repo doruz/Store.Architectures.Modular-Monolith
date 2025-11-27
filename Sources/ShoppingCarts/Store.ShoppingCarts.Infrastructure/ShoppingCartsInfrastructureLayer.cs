@@ -4,7 +4,6 @@ using System.Reflection;
 
 using Store.Shared;
 using Store.ShoppingCarts.Domain;
-using Store.ShoppingCarts.Domain.Repositories;
 using Store.ShoppingCarts.Infrastructure.Cosmos;
 
 namespace Store.ShoppingCarts.Infrastructure;

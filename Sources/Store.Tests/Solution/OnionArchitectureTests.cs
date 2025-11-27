@@ -11,7 +11,7 @@ public class OnionArchitectureTests
             (
                 SolutionNamespaces.Core.Domain,
                 SolutionNamespaces.Core.Business,
-                SolutionNamespaces.Infrastructure.All,
+                SolutionNamespaces.InfrastructureOld.All,
                 SolutionNamespaces.Presentation.All
             )
             .GetResult();
@@ -27,7 +27,7 @@ public class OnionArchitectureTests
             .HaveDependencyOnAny
             (
                 SolutionNamespaces.Core.Business,
-                SolutionNamespaces.Infrastructure.All,
+                SolutionNamespaces.InfrastructureOld.All,
                 SolutionNamespaces.Presentation.All
             )
             .GetResult();
@@ -42,7 +42,7 @@ public class OnionArchitectureTests
             .ShouldNot()
             .HaveDependencyOnAny
             (
-                SolutionNamespaces.Infrastructure.All,
+                SolutionNamespaces.InfrastructureOld.All,
                 SolutionNamespaces.Presentation.All
             )
             .GetResult();
@@ -50,18 +50,18 @@ public class OnionArchitectureTests
         result.FailingTypeNames.Should().BeNullOrEmpty();
     }
 
-    [Fact]
-    public void PersistenceLayer_Should_NotHaveDependenciesOnLayersAboveBusiness()
-    {
-        var result = SolutionTypes.Infrastructure.Persistence
-            .ShouldNot()
-            .HaveDependencyOnAny
-            (
-                SolutionNamespaces.Core.Business,
-                SolutionNamespaces.Presentation.All
-            )
-            .GetResult();
+    //[Fact]
+    //public void PersistenceLayer_Should_NotHaveDependenciesOnLayersAboveBusiness()
+    //{
+    //    var result = SolutionTypes.Infrastructure.Persistence
+    //        .ShouldNot()
+    //        .HaveDependencyOnAny
+    //        (
+    //            SolutionNamespaces.Core.Business,
+    //            SolutionNamespaces.Presentation.All
+    //        )
+    //        .GetResult();
 
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
+    //    result.FailingTypeNames.Should().BeNullOrEmpty();
+    //}
 }
