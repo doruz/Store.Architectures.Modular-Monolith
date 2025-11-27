@@ -7,7 +7,7 @@ public class ApiLayerTests
     [Fact]
     public void ApiControllers_Should_NotDependOnDomain()
     {
-        var result = SolutionTypes.Presentation.Api
+        var result = SolutionTypes.Api
             .That()
             .Inherit(typeof(ControllerBase))
             .ShouldNot()
@@ -20,7 +20,7 @@ public class ApiLayerTests
     [Fact]
     public void ApiControllersActions_Should_ReturnIActionResult()
     {
-        var result = SolutionTypes.Presentation.Api
+        var result = SolutionTypes.Api
             .That()
             .Inherit(typeof(ControllerBase))
             .Should()
@@ -36,7 +36,7 @@ public class ApiLayerTests
         var policy = Policy
             .Define("API routes", "Should follow route conventions")
 
-            .For(SolutionTypes.Presentation.Api)
+            .For(SolutionTypes.Api)
 
             .Add(types => types
                     .That()

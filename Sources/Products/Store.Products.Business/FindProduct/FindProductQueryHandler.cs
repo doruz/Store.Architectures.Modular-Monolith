@@ -4,18 +4,11 @@ using Store.Products.Domain;
 namespace Store.Products.Business;
 
 internal sealed class FindProductQueryHandler(IProductsRepository products) :
-    IRequestHandler<FindProductQuery, ProductModel>,
-    IRequestHandler<FindProductRequest, ProductModel>
+    IRequestHandler<FindProductQuery, ProductModel>
 {
-    public Task<ProductModel> Handle(FindProductQuery query, CancellationToken _)
-        => FindProduct(query.Id);
-
-    public Task<ProductModel> Handle(FindProductRequest request, CancellationToken _)
-        => FindProduct(request.Id);
-
-    private Task<ProductModel> FindProduct(string id) =>
-        products
-            .FindAsync(id)
-            .EnsureExists(id)
+    public Task<ProductModel> Handle(FindProductQuery query, CancellationToken _) 
+        => products
+            .FindAsync(query.Id)
+            .EnsureExists(query.Id)
             .MapAsync(ProductModelFactory.Create);
 }

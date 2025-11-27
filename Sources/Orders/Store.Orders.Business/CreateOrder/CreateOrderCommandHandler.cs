@@ -37,7 +37,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
 
     public async Task<ProductModel> FindValidProduct(string id, int expectedQuantity)
     {
-        var product = await mediator.Send(new FindProductRequest(id));
+        var product = await mediator.Send(new FindProductQuery(id));
 
         return product.EnsureStockIsAvailable(expectedQuantity);
     }

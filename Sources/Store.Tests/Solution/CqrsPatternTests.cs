@@ -10,7 +10,8 @@ public class CqrsPatternTests
     private const string Query = "Query";
     private const string QueryHandler = "QueryHandler";
 
-    private readonly Types _allTypes = Types.FromPath(Directory.GetCurrentDirectory());
+    private const string Event = "Event";
+    private const string EventHandler = "Handler";
 
     [Fact]
     public void Cqrs_Should_FollowNamingConventions()
@@ -18,44 +19,20 @@ public class CqrsPatternTests
         var policy = Policy
             .Define("CQRS", "Should follow naming conventions")
 
-            .For(_allTypes)
+            .For(SolutionTypes.All)
 
-            .Add(types => types
-                    .That()
-                    .ImplementInterface(typeof(IRequest))
-                    .Should()
-                    .HaveNameEndingWith(Command),
-                "Commands",
-                $"Names of types that implement {typeof(IRequest).FullName} should end with {Command}"
-            )
-            .Add(types => types
-                    .That()
-                    .ImplementInterface(typeof(IRequestHandler<>))
-                    .Should()
-                    .HaveNameEndingWith(CommandHandler),
-                "Commands Handlers",
-                $"Types that implement {typeof(IRequestHandler<>).FullName} should have name ending with {CommandHandler}"
-            )
+            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequest), Command)
+            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequestHandler<>), CommandHandler)
 
-            .Add(types => types
-                    .That()
-                    .ImplementInterface(typeof(IRequest<>))
-                    .Should()
-                    .HaveNameMatching($"{Query}|{Command}$"),
-                "Commands & Queries",
-                $"Names of types that implement {typeof(IRequest<>).FullName} should end with {Query} or {Command}"
-            )
-            .Add(types => types
-                    .That()
-                    .ImplementInterface(typeof(IRequestHandler<,>))
-                    .Should()
-                    .HaveNameMatching($"{QueryHandler}$|{CommandHandler}$"),
-                "Commands & Queries Handlers",
-                $"Types that implement {typeof(IRequestHandler<,>).FullName} should have name ending with {QueryHandler} or {CommandHandler}"
-            );
+            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequest<>), Command, Query)
+            .TypesImplementingInterfaceHaveNameEndingWith(typeof(IRequestHandler<,>), CommandHandler, QueryHandler)
+
+            .TypesImplementingInterfaceHaveNameEndingWith(typeof(INotification), Event)
+            .TypesImplementingInterfaceHaveNameEndingWith(typeof(INotificationHandler<>), EventHandler);
 
         policy.Evaluate().ShouldBeSuccessful();
     }
+
 
     [Fact]
     public void Cqrs_Should_FollowImplementationConventions()
@@ -63,11 +40,11 @@ public class CqrsPatternTests
         var policy = Policy
             .Define("CQRS", "Should follow implementation conventions")
 
-            .For(_allTypes)
+            .For(SolutionTypes.All)
 
             .Add(types => types
                     .That()
-                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>))
+                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>)).Or().ImplementInterface(typeof(INotification))
                     .Or()
                     .HaveNameMatching($"({Query}|{Command})Result$")
                     .Should()
@@ -78,7 +55,7 @@ public class CqrsPatternTests
 
             .Add(types => types
                     .That()
-                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>))
+                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>)).Or().ImplementInterface(typeof(INotificationHandler<>))
                     .Should()
                     .NotBePublic().And().BeSealed().And().BeClasses().And().NotBeRecords(),
                 "Commands & Queries Handlers",
@@ -94,28 +71,28 @@ public class CqrsPatternTests
         var policy = Policy
             .Define("CQRS", "Should not expose business domain types")
 
-            .For(_allTypes)
+            .For(SolutionTypes.All)
 
             .Add(types => types
                     .That()
-                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>))
+                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>)).Or().ImplementInterface(typeof(INotification))
                     .Or()
                     .HaveNameMatching($"({Query}|{Command})Result$")
                     .Or()
                     .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>))
                     .ShouldNot()
-                    .HavePropertiesWithTypesFrom(SolutionNamespaces.Core.Domain),
+                    .HavePropertiesWithTypesFrom("Domain"),
                 "Commands & Queries",
                 "Types should not expose domain types through their properties."
             )
 
             .Add(types => types
                     .That()
-                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>))
+                    .ImplementInterface(typeof(IRequest)).Or().ImplementInterface(typeof(IRequest<>)).Or().ImplementInterface(typeof(INotification))
                     .Or()
-                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>))
+                    .ImplementInterface(typeof(IRequestHandler<>)).Or().ImplementInterface(typeof(IRequestHandler<,>)).Or().ImplementInterface(typeof(INotificationHandler<>))
                     .ShouldNot()
-                    .UseTypesOnPublicMethodsFrom(SolutionNamespaces.Core.Domain),
+                    .UseTypesOnPublicMethodsFrom("Domain"),
                 "Commands & Queries",
                 "Types should not expose domain types through their public methods."
             );

@@ -8,7 +8,7 @@ internal static class ProductsClient
     {
         try
         {
-            return await mediator.Send(new FindProductRequest(id));
+            return await mediator.Send(new FindProductQuery(id));
         }
         catch (AppError)
         {

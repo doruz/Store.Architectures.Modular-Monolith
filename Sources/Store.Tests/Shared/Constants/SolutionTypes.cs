@@ -33,44 +33,16 @@ internal static class SolutionTypes
         ShoppingCartsInfrastructureLayer.Assembly
     ]);
 
-    //public static class Domain
-    //{
-    //    public static Types Orders => Types.InAssembly(OrdersDomainLayer.Assembly);
-    //    public static Types Domain => Types.InAssembly(DomainLayer.Assembly);
-    //    public static Types Business => Types.InAssembly(BusinessLayer.Assembly);
-    //}
+    public static Types Api => Types.InAssembly(ApiLayer.Assembly);
+
+    public static Types All => Types.FromPath(Directory.GetCurrentDirectory());
+
+    // TODO: OLD TYPES
 
     public static class Core
     {
-        public static Types All => Types.InAssemblies(
-        [
-            //SharedLayer.Assembly,
-            //DomainLayer.Assembly,
-            //BusinessLayer.Assembly
-        ]);
-
         public static Types Shared => null;// Types.InAssembly(SharedLayer.Assembly);
         public static Types Domain => null; // Types.InAssembly(DomainLayer.Assembly);
         public static Types Business => null; // Types.InAssembly(BusinessLayer.Assembly);
-    }
-
-    //public static class Infrastructure
-    //{
-    //    public static Types All => Types.InAssemblies(
-    //    [
-    //        //PersistenceLayer.Assembly,
-    //    ]);
-
-    //    public static Types Persistence => null; //Types.InAssembly(PersistenceLayer.Assembly);
-    //}
-
-    public static class Presentation
-    {
-        public static Types All => Types.InAssemblies(
-        [
-            ApiLayer.Assembly,
-        ]);
-
-        public static Types Api => Types.InAssembly(ApiLayer.Assembly);
     }
 }
