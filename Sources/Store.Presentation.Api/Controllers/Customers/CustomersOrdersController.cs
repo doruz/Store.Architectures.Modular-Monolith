@@ -27,13 +27,13 @@ public sealed class CustomersOrdersController(IMediator mediator) : BaseApiContr
     /// </summary>
     [HttpPost]
 
-    [ProducesResponseType<IdModel>(StatusCodes.Status201Created)]
+    [ProducesResponseType<EntityId>(StatusCodes.Status201Created)]
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
 
     public async Task<IActionResult> CreateOrder([FromBody] CreateOrderLineModel[] lines)
     {
-        IdModel newOrder = await Handle(new CreateOrderCommand(lines));
+        EntityId newOrder = await Handle(new CreateOrderCommand(lines));
 
         return CreatedAtAction(nameof(FindOrderDetails), new { OrderId = newOrder.Id }, newOrder);
     }

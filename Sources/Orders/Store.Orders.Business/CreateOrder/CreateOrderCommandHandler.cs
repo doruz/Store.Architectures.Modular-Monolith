@@ -5,9 +5,9 @@ using Store.Products.Contracts;
 namespace Store.Orders.Business;
 
 internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurrentCustomer currentCustomer, IMediator mediator)
-    : IRequestHandler<CreateOrderCommand, IdModel>
+    : IRequestHandler<CreateOrderCommand, EntityId>
 {
-    public async Task<IdModel> Handle(CreateOrderCommand request, CancellationToken _)
+    public async Task<EntityId> Handle(CreateOrderCommand request, CancellationToken _)
     {
         request.EnsureIsNotEmpty();
 
@@ -19,7 +19,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
 
         await SaveOrder(customerOrder);
 
-        return new IdModel(customerOrder.Id);
+        return customerOrder.Id;
     }
 
     private async Task<IEnumerable<OrderLine>> GetOrderLines(IEnumerable<CreateOrderLineModel> lines)

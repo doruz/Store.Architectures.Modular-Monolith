@@ -2,7 +2,7 @@
 
 namespace Store.Products.Business;
 
-public record AddProductCommand : IRequest<IdModel>
+public record AddProductCommand : IRequest<EntityId>
 {
     [Required(ErrorMessage = ValidationMessages.Required)]
     [MaxLength(100, ErrorMessage = ValidationMessages.MaxLength)]

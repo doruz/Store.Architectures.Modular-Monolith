@@ -1,6 +1,4 @@
-﻿using Store.Shared;
-
-namespace Store.Presentation.Api.IntegrationTests.Customers;
+﻿namespace Store.Presentation.Api.IntegrationTests.Customers;
 
 public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(factory)
 {
@@ -173,7 +171,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
         var newOrder = await Api.Customer.Orders
             .CreateAsync(orderActions)
             .EnsureIsSuccess()
-            .ContentAsAsync<IdModel>();
+            .ContentAsAsync<EntityIdTestModel>();
 
         var savedOrder = await Database.FindCustomerOrder(CurrentCustomer.Id, newOrder.Id);
 

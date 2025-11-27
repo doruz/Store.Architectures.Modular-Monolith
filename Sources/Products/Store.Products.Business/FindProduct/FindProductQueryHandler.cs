@@ -1,5 +1,4 @@
-﻿using Store.Products.Business;
-using Store.Products.Contracts;
+﻿using Store.Products.Contracts;
 using Store.Products.Domain;
 
 namespace Store.Products.Business;

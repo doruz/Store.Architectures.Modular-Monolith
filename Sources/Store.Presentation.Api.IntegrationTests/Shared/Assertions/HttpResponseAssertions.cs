@@ -50,7 +50,7 @@ internal sealed class HttpResponseAssertions(HttpResponseMessage response)
 
     public async Task<AndConstraint<StringAssertions>> ContainIdAsync()
     {
-        var responseContent = await response.ContentAsAsync<EntityId>();
+        var responseContent = await response.ContentAsAsync<EntityIdTestModel>();
 
         responseContent.Should().NotBeNull();
 

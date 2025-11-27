@@ -2,7 +2,7 @@
 
 public abstract class Entity
 {
-    public virtual string Id { get; init; } = Guid.NewGuid().ToString().ToLower();
+    public virtual string Id { get; init; } = EntityId.New();
 
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 

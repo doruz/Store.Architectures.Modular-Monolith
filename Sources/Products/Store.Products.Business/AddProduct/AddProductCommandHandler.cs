@@ -3,15 +3,15 @@
 namespace Store.Products.Business;
 
 internal sealed class AddProductCommandHandler(IProductsRepository products)
-    : IRequestHandler<AddProductCommand, IdModel>
+    : IRequestHandler<AddProductCommand, EntityId>
 {
-    public async Task<IdModel> Handle(AddProductCommand command, CancellationToken _)
+    public async Task<EntityId> Handle(AddProductCommand command, CancellationToken _)
     {
         var newProduct = CreateProduct(command);
 
         await products.AddAsync(newProduct);
 
-        return new IdModel(newProduct.Id);
+        return newProduct.Id;
     }
 
     private static Product CreateProduct(AddProductCommand command) => new

@@ -2,7 +2,7 @@
 
 namespace Store.Orders.Business;
 
-public sealed record CreateOrderCommand(CreateOrderLineModel[] Lines) : IRequest<IdModel>
+public sealed record CreateOrderCommand(CreateOrderLineModel[] Lines) : IRequest<EntityId>
 {
     internal IEnumerable<CreateOrderLineModel> ValidLines => Lines.Where(line => line.Quantity > 0);
 

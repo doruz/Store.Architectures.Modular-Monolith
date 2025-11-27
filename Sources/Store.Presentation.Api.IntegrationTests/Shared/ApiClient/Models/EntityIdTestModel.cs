@@ -1,3 +1,3 @@
 ﻿namespace Store.Presentation.Api.IntegrationTests;
 
-public sealed record EntityId(string Id);
+public sealed record EntityIdTestModel(string Id);

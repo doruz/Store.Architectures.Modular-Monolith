@@ -26,11 +26,11 @@ public sealed class AdminProductsController(IMediator mediator) : BaseApiControl
     /// Add new product details.
     /// </summary>
     [HttpPost]
-    [ProducesResponseType<IdModel>(StatusCodes.Status201Created)]
+    [ProducesResponseType<EntityId>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddProduct([FromBody] AddProductCommand command)
     {
-        IdModel newProduct = await Handle(command);
+        EntityId newProduct = await Handle(command);
 
         return CreatedAtAction(nameof(FindProduct), new { newProduct.Id }, newProduct);
     }
