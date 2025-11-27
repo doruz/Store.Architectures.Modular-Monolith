@@ -20,6 +20,6 @@ internal sealed class GetCustomerOrdersQueryHandler(IOrdersRepository orders, IC
         OrderedAt = DateTimeModel.Create(order.CreatedAt),
 
         TotalProducts = order.TotalProducts,
-        TotalPrice = PriceModel.Create(order.TotalPrice)
+        TotalPrice = order.TotalPrice
     };
 }

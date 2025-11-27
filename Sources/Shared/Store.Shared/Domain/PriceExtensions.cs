@@ -2,6 +2,9 @@
 
 public static class PriceExtensions
 {
+    public static Price Sum<T>(this IEnumerable<T> source, Func<T, Price> priceSelector)
+        => source.Select(priceSelector).Sum();
+
     public static Price Sum(this IEnumerable<Price> prices)
     {
         return prices.IsNotEmpty()

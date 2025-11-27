@@ -7,7 +7,7 @@ public sealed record FindCustomerOrderQueryResult
     public required DateTimeModel OrderedAt { get; init; }
 
     public required int TotalProducts { get; init; }
-    public required PriceModel TotalPrice { get; init; }
+    public required Price TotalPrice { get; init; }
 
     public required IReadOnlyList<OrderDetailedLineModel> Lines { get; init; } = [];
 }
@@ -18,9 +18,9 @@ public sealed record OrderDetailedLineModel
 
     public required string ProductName { get; init; }
 
-    public required PriceModel ProductPrice { get; init; }
+    public required Price ProductPrice { get; init; }
 
     public required int Quantity { get; init; }
 
-    public required PriceModel TotalPrice { get; init; }
+    public required Price TotalPrice { get; init; }
 }

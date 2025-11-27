@@ -9,7 +9,7 @@ internal static class ProductModelFactory
     {
         Id = product.Id,
         Name = product.Name,
-        Price = PriceModel.Create(product.Price),
+        Price = product.Price,
         Stock = product.Stock
     };
 }

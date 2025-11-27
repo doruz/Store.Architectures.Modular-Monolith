@@ -20,7 +20,7 @@ internal sealed class FindCustomerOrderQueryHandler(IOrdersRepository orders, IC
         OrderedAt = DateTimeModel.Create(order.CreatedAt),
 
         TotalProducts = order.TotalProducts,
-        TotalPrice = PriceModel.Create(order.TotalPrice),
+        TotalPrice = order.TotalPrice,
 
         Lines = order.Lines.Select(ToOrderLineModel).ToList()
     };
@@ -29,8 +29,8 @@ internal sealed class FindCustomerOrderQueryHandler(IOrdersRepository orders, IC
     {
         ProductId = product.ProductId,
         ProductName = product.ProductName,
-        ProductPrice = PriceModel.Create(product.ProductPrice),
+        ProductPrice = product.ProductPrice,
         Quantity = product.Quantity,
-        TotalPrice = PriceModel.Create(product.TotalPrice)
+        TotalPrice = product.TotalPrice
     };
 }

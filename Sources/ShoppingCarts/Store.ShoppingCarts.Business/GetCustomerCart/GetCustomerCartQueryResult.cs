@@ -2,7 +2,7 @@
 
 public sealed record GetCustomerCartQueryResult(IEnumerable<GetCustomerCartLineModel> Lines)
 {
-    public PriceModel TotalPrice => Lines.Sum(l => l.TotalPrice);
+    public Price TotalPrice => Lines.Sum(l => l.TotalPrice);
 }
 
 public sealed record GetCustomerCartLineModel
@@ -11,9 +11,9 @@ public sealed record GetCustomerCartLineModel
 
     public required string ProductName { get; init; }
 
-    public required PriceModel ProductPrice { get; init; }
+    public required Price ProductPrice { get; init; }
 
     public required int Quantity { get; init; }
 
-    public PriceModel TotalPrice => ProductPrice * Quantity;
+    public Price TotalPrice => ProductPrice * Quantity;
 }

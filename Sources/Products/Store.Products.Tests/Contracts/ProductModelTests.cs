@@ -9,7 +9,7 @@ public class ProductModelTests
     {
         Id = "test",
         Name = "Test",
-        Price = PriceModel.Create(1.0m),
+        Price = 1.0m,
         Stock = 10
     };
 

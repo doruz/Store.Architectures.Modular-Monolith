@@ -7,5 +7,5 @@ public record OrderSummaryModel
     public required DateTimeModel OrderedAt { get; init; }
 
     public required int TotalProducts { get; init; }
-    public required PriceModel TotalPrice { get; init; }
+    public required Price TotalPrice { get; init; }
 }
