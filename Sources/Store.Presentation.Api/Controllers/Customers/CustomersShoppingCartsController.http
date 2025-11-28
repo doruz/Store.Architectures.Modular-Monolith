@@ -18,7 +18,3 @@ Content-Type: application/json
         "quantity": 5
     }
 ]
-
-
-### checkout current shopping cart
-POST {{ShoppingCartRoute}}/checkout
