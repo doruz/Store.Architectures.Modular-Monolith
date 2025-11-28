@@ -1,0 +1,22 @@
+@OrdersRoute={{BaseUrl}}/api/customers/current/orders
+@OrderId={{newOrder.response.body.$.id}}
+
+
+# get customer orders summaries
+GET {{OrdersRoute}}
+
+
+### find customer order
+GET {{OrdersRoute}}/{{OrderId}}
+
+
+### create new order
+# @name newOrder
+POST {{OrdersRoute}}
+Content-Type: application/json
+[
+    {
+        "productId": "c0701005-13d3-421c-a7e2-f90a625419e2",
+        "quantity": 5
+    }
+]

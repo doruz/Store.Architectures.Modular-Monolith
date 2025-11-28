@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>9663ab18-fd54-4a49-8226-7e0ae9e1c54d</UserSecretsId>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Store.Presentation.Api.IntegrationTests" />
+		<InternalsVisibleTo Include="Store.Tests" />
+	</ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orders\Store.Orders.Business\Store.Orders.Business.csproj" />
+    <ProjectReference Include="..\Orders\Store.Orders.Infrastructure\Store.Orders.Infrastructure.csproj" />
+    <ProjectReference Include="..\Products\Store.Products.Business\Store.Products.Business.csproj" />
+    <ProjectReference Include="..\Products\Store.Products.Infrastructure\Store.Products.Infrastructure.csproj" />
+    <ProjectReference Include="..\ShoppingCarts\Store.ShoppingCarts.Business\Store.ShoppingCarts.Business.csproj" />
+    <ProjectReference Include="..\ShoppingCarts\Store.ShoppingCarts.Infrastructure\Store.ShoppingCarts.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="http-client.env.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
