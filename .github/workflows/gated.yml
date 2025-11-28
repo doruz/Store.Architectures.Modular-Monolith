@@ -23,7 +23,7 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    - name: Restore Depenencies
+    - name: Restore Dependencies
       run: dotnet restore
 
     - name: Build Solution
