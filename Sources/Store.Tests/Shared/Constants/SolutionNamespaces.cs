@@ -11,7 +11,6 @@ internal static class SolutionNamespaces
     public const string InfrastructureName = "Infrastructure";
 
 
-    public const string ContractsPattern = $"{Base}.{ModulesPattern}.{ContractsName}";
     public const string DomainPattern = $"{Base}.{ModulesPattern}.{DomainName}";
     public const string BusinessPattern = $"{Base}.{ModulesPattern}.{BusinessName}";
     public const string InfrastructurePattern = $"{Base}.{ModulesPattern}.{InfrastructureName}";
@@ -23,20 +22,28 @@ internal static class SolutionNamespaces
 
     public static string[] Domain => Modules.Select(m => m.Domain).ToArray();
     public static string[] Business => Modules.Select(m => m.Business).ToArray();
-    public static string[] Infrastructure => Modules.Select(m => m.Infrastructure).ToArray();
+    public static string[] Infrastructure => [Shared.Infrastructure, ..Modules.Select(m => m.Infrastructure)];
+
+    public static class Shared
+    {
+        public const string All = $"{Base}.Shared";
+
+        public const string Infrastructure = $"{All}.{InfrastructureName}";
+    }
 
     public static class Presentation
     {
-        public const string All = "{Base}.Presentation";
+        public const string All = $"{Base}.Presentation";
 
         public const string Api = $"{All}.Api";
     }
 
-    public class ModuleNamespaces(string moduleName)
+    public record ModuleNamespaces(string Module)
     {
-        public string Contracts => $"{Base}.{moduleName}.{ContractsName}";
-        public string Domain => $"{Base}.{moduleName}.{DomainName}";
-        public string Business => $"{Base}.{moduleName}.{BusinessName}";
-        public string Infrastructure => $"{Base}.{moduleName}.{InfrastructureName}";
+        public string Domain => $"{Base}.{Module}.{DomainName}";
+        public string Business => $"{Base}.{Module}.{BusinessName}";
+        public string Infrastructure => $"{Base}.{Module}.{InfrastructureName}";
+
+        public string[] All => [Domain, Business, Infrastructure];
     }
 }

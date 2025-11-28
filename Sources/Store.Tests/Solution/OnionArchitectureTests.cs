@@ -1,13 +1,13 @@
 ﻿namespace Store.Tests.Solution;
 
-public class ModulesOnionArchitectureTests
+public class OnionArchitectureTests
 {
     [Fact]
     public void ContractsLayer_Should_NotHaveDependenciesOnLayersAbove()
     {
         var result = SolutionTypes.All
             .That()
-            .ResideInNamespaceEndingWith(SolutionNamespaces.ContractsName)
+            .ResideInNamespaceContaining(SolutionNamespaces.ContractsName)
             .Should()
             .NotHaveDependencyOnAny
             (
@@ -28,7 +28,7 @@ public class ModulesOnionArchitectureTests
     {
         var result = SolutionTypes.All
             .That()
-            .ResideInNamespaceEndingWith(SolutionNamespaces.DomainName)
+            .ResideInNamespaceContaining(SolutionNamespaces.DomainName)
             .Should()
             .NotHaveDependencyOnAny
             (
@@ -48,7 +48,7 @@ public class ModulesOnionArchitectureTests
     {
         var result = SolutionTypes.All
             .That()
-            .ResideInNamespaceEndingWith(SolutionNamespaces.BusinessName)
+            .ResideInNamespaceContaining(SolutionNamespaces.BusinessName)
             .Should()
             .NotHaveDependencyOnAny
             (
@@ -67,7 +67,7 @@ public class ModulesOnionArchitectureTests
     {
         var result = SolutionTypes.All
             .That()
-            .ResideInNamespaceEndingWith(SolutionNamespaces.InfrastructureName)
+            .ResideInNamespaceContaining(SolutionNamespaces.InfrastructureName)
             .Should()
             .NotHaveDependencyOnAny
             (
