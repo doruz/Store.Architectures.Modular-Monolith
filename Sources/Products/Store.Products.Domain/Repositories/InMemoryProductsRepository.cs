@@ -17,8 +17,6 @@ public sealed class InMemoryProductsRepository : IProductsRepository
     {
         EnsureArg.IsNotNull(product, nameof(product));
 
-        throw new Exception("");
-
         _products.Add(product);
 
         return Task.CompletedTask;
