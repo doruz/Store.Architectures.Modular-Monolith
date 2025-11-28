@@ -9,7 +9,7 @@ public class DomainLayerTests
             .That()
             .ArePublic()
             .Should()
-            .ResideInFixedNamespace(SolutionNamespaces.Domain)
+            .ResideInFixedNamespace(SolutionNamespaces.DomainPattern)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

@@ -11,7 +11,7 @@ public class ApiLayerTests
             .That()
             .Inherit(typeof(ControllerBase))
             .ShouldNot()
-            .HaveDependencyOn(SolutionNamespaces.Core.Domain)
+            .HaveDependencyOnAny(SolutionNamespaces.Modules.Select(m => m.Domain).ToArray())
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

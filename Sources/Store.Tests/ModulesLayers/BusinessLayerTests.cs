@@ -9,7 +9,7 @@ public class BusinessLayerTests
             .That()
             .ArePublic()
             .Should()
-            .ResideInFixedNamespace(SolutionNamespaces.Business)
+            .ResideInFixedNamespace(SolutionNamespaces.BusinessPattern)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

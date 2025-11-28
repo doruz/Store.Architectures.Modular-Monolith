@@ -35,7 +35,7 @@ public class InfrastructureLayerTests
             .That()
             .HaveDependencyOn("Microsoft.Azure.Cosmos")
             .Should()
-            .ResideInFixedNamespace($"{SolutionNamespaces.Infrastructure}.Cosmos")
+            .ResideInFixedNamespace($"{SolutionNamespaces.InfrastructurePattern}.Cosmos")
             .And().HaveNameStartingWith("Cosmos")
             .GetResult();
 

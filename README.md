@@ -1,17 +1,23 @@
 # Store.Architectures.Modular-Monolith
 Modular Monolith Architecture in .NET
 
+Refactoring [Vertical-Slice repository](https://github.com/doruz/Store.Architectures.Vertical-Slice) into Modular Monolith.
 
 Modules:
-	- Products
-	- Orders
-	- Shopping Cart
+- Products
+- Orders
+- Shopping Cart
+- Shared
 
 Module project:
-	- Store.{module}.Domain
-	- Store.{module}.Business
-	- Store.{module}.Public/Contracts/Client
-
-
-ArchTests
-	- Store.{module}.Domain/Business to have fixed namespaces
+- V1
+  - Store.{Module}.Domain
+  - Store.{Module}.Business
+  - Store.{Module}.Infrastructure
+  - Store.{Module}.Contracts
+- V2
+  - Store.{Module}
+    - Domain
+    - Business
+  - Store.{Module}.Infrastructure
+  - Store.{Module}.Contracts

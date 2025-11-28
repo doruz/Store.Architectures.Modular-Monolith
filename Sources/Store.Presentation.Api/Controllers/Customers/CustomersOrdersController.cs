@@ -21,7 +21,6 @@ public sealed class CustomersOrdersController(IMediator mediator) : BaseApiContr
     public async Task<IActionResult> FindOrderDetails([FromRoute] FindCustomerOrderQuery query)
         => await HandleQuery(query);
 
-    // TODO: add integration tests
     /// <summary>
     /// Create new order for the authenticated customer.
     /// </summary>

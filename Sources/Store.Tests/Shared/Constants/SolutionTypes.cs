@@ -36,13 +36,4 @@ internal static class SolutionTypes
     public static Types Api => Types.InAssembly(ApiLayer.Assembly);
 
     public static Types All => Types.FromPath(Directory.GetCurrentDirectory());
-
-    // TODO: OLD TYPES
-
-    public static class Core
-    {
-        public static Types Shared => null;// Types.InAssembly(SharedLayer.Assembly);
-        public static Types Domain => null; // Types.InAssembly(DomainLayer.Assembly);
-        public static Types Business => null; // Types.InAssembly(BusinessLayer.Assembly);
-    }
 }
