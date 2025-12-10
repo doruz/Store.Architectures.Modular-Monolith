@@ -7,7 +7,7 @@ internal sealed class GetCustomerOrdersQueryHandler(IOrdersRepository orders, IC
 {
     public async Task<IEnumerable<OrderSummaryModel>> Handle(GetCustomerOrdersQuery request, CancellationToken _)
     {
-        var customerOrders = await orders.GetCustomerOrdersAsync(currentCustomer.Id);
+        var customerOrders = await orders.GetAllAsync(currentCustomer.Id);
 
         return customerOrders
             .OrderByDescending(order => order.CreatedAt)

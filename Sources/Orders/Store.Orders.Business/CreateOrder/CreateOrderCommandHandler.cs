@@ -59,7 +59,7 @@ internal sealed class CreateOrderCommandHandler(IOrdersRepository orders, ICurre
 
     private async Task SaveOrder(Order order)
     {
-        await orders.SaveOrderAsync(order);
+        await orders.SaveAsync(order);
         await mediator.Publish(order.NewOrderEvent());
     }
 }

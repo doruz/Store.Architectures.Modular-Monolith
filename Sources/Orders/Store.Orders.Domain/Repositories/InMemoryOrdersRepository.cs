@@ -7,7 +7,7 @@ public sealed class InMemoryOrdersRepository : IOrdersRepository
 {
     private readonly List<Order> _orders = [];
 
-    public Task<IEnumerable<Order>> GetCustomerOrdersAsync(string customerId)
+    public Task<IEnumerable<Order>> GetAllAsync(string customerId)
     {
         EnsureArg.IsNotNullOrEmpty(customerId, nameof(customerId));
 
@@ -17,7 +17,7 @@ public sealed class InMemoryOrdersRepository : IOrdersRepository
         return Task.FromResult(customerOrders);
     }
 
-    public Task<Order?> FindOrderAsync(string customerId, string id)
+    public Task<Order?> FindAsync(string customerId, string id)
     {
         EnsureArg.IsNotNullOrEmpty(customerId, nameof(customerId));
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));
@@ -28,7 +28,7 @@ public sealed class InMemoryOrdersRepository : IOrdersRepository
         return Task.FromResult(customerOrder);
     }
 
-    public Task SaveOrderAsync(Order order)
+    public Task SaveAsync(Order order)
     {
         EnsureArg.IsNotNull(order, nameof(order));
 
