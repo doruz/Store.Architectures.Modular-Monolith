@@ -2,9 +2,9 @@
 
 public interface IOrdersRepository
 {
-    Task<IEnumerable<Order>> GetCustomerOrdersAsync(string customerId);
+    Task<IEnumerable<Order>> GetAllAsync(string customerId);
 
-    Task<Order?> FindOrderAsync(string customerId, string id);
+    Task<Order?> FindAsync(string customerId, string id);
 
-    Task SaveOrderAsync(Order order);
+    Task SaveAsync(Order order);
 }

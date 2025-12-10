@@ -8,7 +8,7 @@ internal sealed class FindCustomerOrderQueryHandler(IOrdersRepository orders, IC
     public async Task<FindCustomerOrderQueryResult> Handle(FindCustomerOrderQuery request, CancellationToken _)
     {
         var order = await orders
-            .FindOrderAsync(currentCustomer.Id, request.OrderId)
+            .FindAsync(currentCustomer.Id, request.OrderId)
             .EnsureIsNotNull(request.OrderId);
 
         return order.Map(ToOrderDetailedModel);
